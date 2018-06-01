@@ -354,7 +354,9 @@ function relAggregate(_listPerClass) {
   let res = new globalType.Lst();
   if (_listPerClass.IFCRELAGGREGATES)
     for (
-      let index = 0; index < _listPerClass.IFCRELAGGREGATES.length; index++
+      let index = 0;
+      index < _listPerClass.IFCRELAGGREGATES.length;
+      index++
     ) {
       const element = _listPerClass.IFCRELAGGREGATES[index];
       res.push(element);
@@ -375,7 +377,9 @@ function relContained(_listPerClass) {
   let res = new globalType.Lst();
   if (_listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE)
     for (
-      let index = 0; index < _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE.length; index++
+      let index = 0;
+      index < _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE.length;
+      index++
     ) {
       const element = _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE[index];
       res.push(element);
@@ -577,6 +581,7 @@ let objectGenerator = function(_model, _inputFiles, _version) {
     _model.add_child(ptr5);
     _model.add_child(ptr6);
 
+    console.log("test");
 
     // return objects;
   });
