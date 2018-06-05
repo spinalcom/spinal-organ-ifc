@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const spinalcore = require("spinal-core-connectorjs");
 const JSONC = require("circular-json");
 const _cliProgress = require("cli-progress");
 
@@ -15,6 +14,14 @@ function readAndPrepare(_file) {
   );
   let jsonStringBrut = fs.readFileSync(inputFile, "utf8");
   let jsonString = jsonStringBrut;
+
+  //French letters
+  jsonString = jsonString.replace(/\\\\X2\\\\00(..)\\\\X0\\\\/g, function(
+    _,
+    match
+  ) {
+    return String.fromCharCode(parseInt(match, 16));
+  });
   //change () tables into [] tables
   jsonString = jsonString.replace(/\(/g, "[");
   jsonString = jsonString.replace(/\)/g, "]");
@@ -29,27 +36,35 @@ function readAndPrepare(_file) {
   jsonString = jsonString.replace(/\('([0-9-])*\[\?\)'\]/g, "('$1(?)')");
 
   jsonString = jsonString.replace(/([,(])?(\$)([,)])/g, "$1'$$'$3");
-  // jsonString = jsonString.replace(/\$/g, "'$$'");
-  // jsonString = jsonString.replace(/([$\d\w'])(\$)'/g, "$1$2");
-  // jsonString = jsonString.replace(/'(\$)(['$\d\w])/g, "$1$2");
 
-  jsonString = jsonString.replace(/\*/g, "'*'");
+  jsonString = jsonString.replace(/([,(])?(\*)([,)])/g, "$1'*'$3");
   jsonString = jsonString.replace(/#([0-9]*)/g, "_res[$1]");
   jsonString = jsonString.replace(/(\.[a-zA-Z_0-9]*\.)([,)])/g, "'$1'$2");
   jsonString = jsonString.replace(
     /([,[(])([A-Z]+\([^)]*\))/g,
     "$1new TYPES.$2"
   );
+
+  //(new ENTITIES.IFCPROPERTYSINGLEVALUE('Classification du système','$',new TYPES.IFCTEXT('Puissance,Retour hydraulique,Eau froide sanitaire,Alimentation hydraulique,Eau chaude sanitaire,Autre,Sanitaire,Donnée'],'$'))
+  // jsonString = jsonString.replace(/(TYPES.[A-Z]*?[^\]\n]*?)\]/g, "$1)");
+  jsonString = jsonString.replace(/(,[^[]ew TYPES.[A-Z]*\('[^']*')\]/g, "$1)");
+
+  // (new ENTITIES.IFCPROPERTYSINGLEVALUE('Retournement aux extrémités','$',new TYPES.IFCIDENTIFIER('Aucun[e)'],'$'))
+  // jsonString = jsonString.replace(
+  //   /(TYPES.[A-Z]*?\([^[\n]*?)\[([^\]\n]*?)\]/g,
+  //   "$1($2)"
+  // );
+
+  // (TYPES.[A-Z]*\([^[]*)\[([^\]]*)\] $1($2)
+
+  //(TYPES.[A-Z]*[^\]]*)\]  $1)
+
   jsonString = jsonString.replace(/\\/g, "\\\\");
 
   jsonString = jsonString.replace(/''/g, "");
   jsonString = jsonString.replace(/,,,/g, ",'','',");
   jsonString = jsonString.replace(/,,/g, ",'',");
   jsonString = jsonString.replace(/\(,/g, "('',");
-  // jsonString = jsonString.replace(
-  //   /([A-Z]+\((?:(?!],)[^;[])+)]([;,])/g,
-  //   "$1)$2"
-  // );
 
   const afterRegex = path.resolve(
     __dirname + "/../../processing_files/" + _file + "_after_regex.json"
@@ -59,15 +74,7 @@ function readAndPrepare(_file) {
 }
 
 function popById(_array, _id, _reverseObj) {
-  // for (let index = 0; index < _array.length; index++) {
-  //   const element = _array[index];
-  //   if (element._id === _id) {
-  //     _array.splice(index, 1);
-  //     return element;
-  //   }
-  // }
   let element = _reverseObj[_id];
-  // console.log(element);
   _array.splice(_array.indexOf(element), 1);
   return element;
 }
@@ -88,17 +95,11 @@ function createObject(
   _count,
   _streamer
 ) {
-  // console.log("_array", _array);
-  // console.log("_element", _element);
   if (typeof _res[_element._id] === "undefined") {
-    // console.time(_element._id);
-    _count.c++;
     const ENTITIES = require("../../ifc_models/" + _version + "_entities");
     const TYPES = require("../../ifc_models/" + _version + "_types");
     ENTITIES;
     TYPES;
-
-    // var value = _element.type + "";
     let id = _element._id;
     let dependsOn = [];
 
@@ -129,16 +130,8 @@ function createObject(
     }
     let objectData = null;
     let s = `objectData =  (new ENTITIES.${_element.type}${_element.line})`;
-    // console.log(id);
-    // try {
-    //   _streamer.write(_count.c + "\n");
-    // } catch (error) {
-    //   console.log(id);
-    // }
-    // eval(s);
-
-    // _streamer.write();
     try {
+      _count.c++;
       eval(s);
       objectData.add_attr({
         ifcId: id
@@ -146,26 +139,10 @@ function createObject(
     } catch (e) {
       _streamer.write(id + " :  " + s + "\n" + e + "\n");
     }
-    // objectData = eval(_element.type);
-
-    // let composedObject = {
-    //   MetaData: {
-    //     Number: id,
-    //     Name: _element.type
-    //   },
-    //   ObjectData: objectData
-    // };
-
-    // composedObject;
     _res[id] = objectData;
-    // console.timeEnd(_element._id);
-    // printProgress(_count);
     try {
-      // _bar.increment();
       _bar.update(_count.c);
-    } catch (e) {
-      // streamer.write(e);
-    }
+    } catch (e) {}
   }
 }
 
@@ -173,37 +150,19 @@ function createObjects(_jsonString, _version) {
   const bar = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic);
   var count = {};
   count.c = 0;
-  var streamer = fs.createWriteStream("test.txt");
+  var streamer = fs.createWriteStream("errors.txt");
   let obj = JSON.parse(_jsonString);
   let array = Object.values(obj.input._readableState.pipes.lines);
   let res = {};
   let initialLength = array.length;
-  console.log("initial", initialLength);
   bar.start(initialLength, 0);
 
-  // let reverse = array.reverse();
   let reverse = array;
   let reverseObj = {};
   for (let index = 0; index < reverse.length; index++) {
     let element = reverse[index];
-    // element.index = index;
     reverseObj[element._id] = element;
-    // reverseObj.index = index;
   }
-  // while (reverse.length > 0) {
-  //   const element = reverse.pop();
-  //   createObject(
-  //     element,
-  //     reverse,
-  //     res,
-  //     reverseObj,
-  //     _version,
-  //     initialLength,
-  //     bar,
-  //     count,
-  //     streamer
-  //   );
-  // }
 
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
@@ -220,21 +179,14 @@ function createObjects(_jsonString, _version) {
       streamer
     );
   }
-
-  // console.log("count", count);
-  // console.log("res", res);
-  // console.log("reverse", reverse);
-  // console.log("\n");
-
   bar.stop();
-  console.log(count.c);
+  console.log(count.c + "/" + initialLength);
   return res;
 }
 
 function writeToJson(_objectsArray, _outputFile) {
   let streamer = fs.createWriteStream(_outputFile);
   streamer.write("[");
-  // let s = "";
   let b = true;
   for (const key in _objectsArray) {
     if (_objectsArray.hasOwnProperty(key)) {
@@ -244,14 +196,10 @@ function writeToJson(_objectsArray, _outputFile) {
       } else {
         streamer.write(", ");
       }
-      // console.log(element);
-
       streamer.write(JSON.stringify(element.get(), null, 2));
-      // s +=;
     }
   }
   streamer.write("]");
-  // let toPrintJson = JSON.stringify(s, null, 2);
 }
 
 function writeToJsonWithoutGet(_objectsArray, _outputFile) {
@@ -319,32 +267,14 @@ function getClassNames(_objects) {
 function classify(_objects, _classNames) {
   let res = new globalType.Model();
   for (let index = 0; index < _classNames.length; index++) {
-    // let value = _classNames[index] + "_list";
-    // let s = `  var ${value} =  new globalType.Lst(); `;
-    // console.log(s);
-    // eval(s);
-    // let test = eval(_classNames[index] + "_list");
-    // let _classNamesObj = {
-    //   [_classNames[index]]: new globalType.Lst()
-    // };
-    // res.push(_classNamesObj);
-    // res.$ {
-    //   _classNames[index]
-    // } = new globalType.Lst();
     res.add_attr({
       [_classNames[index]]: new globalType.Lst()
     });
   }
   for (const key in _objects) {
     if (_objects.hasOwnProperty(key)) {
-      // for (const key2 in res) {
-      // if (res.hasOwnProperty(key2)) {
-      // if (key2 === _objects[key].constructor.name) {
       if (_objects[key] != null)
         res[_objects[key].constructor.name].push(_objects[key]);
-      // }
-      // }
-      // }
     }
   }
   return res;
@@ -361,15 +291,6 @@ function relAggregate(_listPerClass) {
       const element = _listPerClass.IFCRELAGGREGATES[index];
       res.push(element);
     }
-  // if (_listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE)
-  //   for (
-  //     let index = 0;
-  //     index < _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE.length;
-  //     index++
-  //   ) {
-  //     const element = _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE[index];
-  //     res.push(element);
-  //   }
   return res;
 }
 
@@ -399,29 +320,7 @@ function addChildren(_element, _children, treeType) {
   }
 }
 
-// function findRoot(_listAggregate, treeType) {
-//   let root = null;
-//   let success = true;
-//   for (let index = 0; index < _listAggregate.length; index++) {
-//     const rootCandidate = _listAggregate[index];
-//     for (let index = 0; index < _listAggregate.length; index++) {
-//       const examinater = _listAggregate[index];
-//       for (
-//         let index = 0; index < examinater[treeType + "children"].length; index++
-//       ) {
-//         const element = examinater[treeType + "children"][index];
-//         if (rootCandidate === element) {
-//           success = false;
-//           break;
-//         }
-//       }
-//       if (!success) break;
-//     }
-//     return root;
-//   }
-// }
-
-function findRoot(_listAggregate, treeType) {
+function findRoot(_listAggregate, _listContain) {
   let rootCandidates = [];
   let allExaminators = [];
   let root = null;
@@ -437,13 +336,20 @@ function findRoot(_listAggregate, treeType) {
     }
   }
 
-  for (let index = 0; index < rootCandidates.length; index++) {
-    const candidate = rootCandidates[index];
+  for (let index = 0; index < _listContain.length; index++) {
+    const examinators = _listContain[index].RelatedElements;
+    for (let index = 0; index < examinators.length; index++) {
+      const element = examinators[index];
+      allExaminators.push(element);
+    }
+  }
 
+  for (let index = 0; index < rootCandidates.length; index++) {
+    success = true;
+    const candidate = rootCandidates[index];
     for (let index = 0; index < allExaminators.length; index++) {
       const examinator = allExaminators[index];
-      // console.log(examinator.constructor.name);
-      if (candidate === examinator) {
+      if (candidate.ifcId === examinator.ifcId) {
         success = false;
         break;
       }
@@ -453,7 +359,7 @@ function findRoot(_listAggregate, treeType) {
       rootCounter++;
     }
   }
-  console.log("rootCounter", rootCounter);
+  console.log("rootCounter:", rootCounter);
 
   return root;
 }
@@ -467,34 +373,17 @@ function creatRelTree(_listAggregate, _listContain) {
     const element = _listContain[index];
     addChildren(element.RelatingStructure, element.RelatedElements, "Contains");
   }
-  return findRoot(_listAggregate, "Aggregate");
+  return findRoot(_listAggregate, _listContain);
 }
 
 function relTreeContainer(_listAggregate) {
   let res = new globalType.Lst();
   for (let index = 0; index < _listAggregate.length; index++) {
     const element = _listAggregate[index];
-    // console.log(element.RelatingObject);
     let tree = new SpinalTreeNode(element.RelatingObject);
     tree.createChildren(element.RelatedObjects);
     res.push(tree);
   }
-  // let done = [];
-  // for (let treeIndex = 0; treeIndex < res.length; treeIndex++) {
-  //   const tree = res[treeIndex];
-  //   if (!done.includes(tree.id)) {
-  //     const children = tree.getChildren();
-  //     for (let childIndex = 0; childIndex < children.length; childIndex++) {
-  //       const child = children[childIndex];
-  //       for (let index = 0; index < res.length; index++) {
-  //         const element = res[index];
-  //         if (element.id === child.id)
-
-  //       }
-  //     }
-  //   }
-  //   done.push(tree.id);
-  // }
   return res;
 }
 
@@ -505,7 +394,7 @@ function printProgress(progress) {
 }
 
 let objectGenerator = function(_model, _inputFiles, _version) {
-  console.log("_inputFiles", _inputFiles.length);
+  console.log("inputFiles:", _inputFiles.length);
 
   _inputFiles.forEach(file => {
     const outputFile = path.resolve(
@@ -517,13 +406,11 @@ let objectGenerator = function(_model, _inputFiles, _version) {
 
     console.time("createObjects");
     let objects = createObjects(json, _version);
-    // console.log(objects);
     console.timeEnd("createObjects");
 
     console.time("toLst");
     let ptr = new globalType.Ptr();
     let list = toLst(objects);
-    // list.name.set("test");
     ptr.set(list);
     console.timeEnd("toLst");
 
@@ -556,34 +443,13 @@ let objectGenerator = function(_model, _inputFiles, _version) {
     let relTree = creatRelTree(listAggregate, listContain);
     ptr6.set(relTree);
     console.timeEnd("relTree");
-    // console.log("in", list);
-    // process.env.SPINALHUB_IP = "localhost";
-    // process.env.SPINALHUB_PORT = 7777;
 
-    // let connection = spinalcore.connect(
-    //   "http://168:JHGgcz45JKilmzknzelf65ddDadggftIO98P@" +
-    //     process.env.SPINALHUB_IP +
-    //     ":" +
-    //     process.env.SPINALHUB_PORT +
-    //     "/__users__/admin/"
-    // );
-
-    // spinalcore.store(connection, list, "listModelIfc", function() {
-    //   console.log("stored");
-    //   process.exit();
-    // });
-    // writeToJsonWithoutGet(objects, outputFile);
-    // createAggregateRelations(objects);
-    _model.add_child(ptr);
-    _model.add_child(ptr2);
-    _model.add_child(ptr3);
-    _model.add_child(ptr4);
-    _model.add_child(ptr5);
-    _model.add_child(ptr6);
-
-    console.log("test");
-
-    // return objects;
+    _model.add_child("All", ptr);
+    _model.add_child("AllClassesNames", ptr2);
+    _model.add_child("AllClassesLst", ptr3);
+    _model.add_child("IFCAggregateLst", ptr4);
+    _model.add_child("IFCContainLst", ptr5);
+    _model.add_child("RelTree", ptr6);
   });
 };
 module.exports = objectGenerator;

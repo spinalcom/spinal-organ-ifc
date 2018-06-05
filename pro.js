@@ -7,20 +7,27 @@ var IfcFileItem = require("./spinal-models_ifcfile/ifcfile").IfcFileItem;
 
 let SpinalIfcSystem = function(model) {
   let d = q.defer();
+
   let version = "IFC4_2";
+
   var file_name = model.name
     .get()
     .replace(/ *\t*(%20)*\(([0-9]*)\)(%20)* *\t*/, "");
 
   let cb = function() {
+    // console.log(model);
+
     let extension = file_name.match(/\.[^/.]+$/);
     file_name = file_name.replace(/\.[^/.]+$/, ""); //remove extension
     if (model.state.get() === "parse Ifc") {
+      console.log("start Translating");
+      model.state.set("Translating");
       const ifcParser = require("./src/parsers/ifcParser");
       return ifcParser([file_name], extension).then(() => {
         const objectGenerator = require("./src/generators/objectGenerator");
         objectGenerator(model, [file_name], version, extension);
         d.resolve();
+        model.state.set("Translating completed");
         console.log("done");
       });
     }
@@ -32,22 +39,28 @@ let SpinalIfcSystem = function(model) {
 };
 
 let isReady = function(model, cb) {
-  let toBeChecked = model._children[model._children.length - 1];
+  let keys = model._children._attribute_names;
+  let toBeChecked = model._children[keys[keys.length - 1]];
+
   if (
     !toBeChecked._server_id ||
     global.FileSystem._tmp_objects[toBeChecked._server_id]
   )
     setTimeout(() => {
-      isReady(model, cb);
+      isReady(model, cb.bind(null, model));
     }, 1000);
   else cb();
 };
 
-let cb = function() {
-  process.exit(0);
+let cb = function(_model) {
+  _model.state.set("Export completed");
+  console.log("spawn exited");
+  setTimeout(() => {
+    process.exit(0);
+  }, 1000);
 };
 
-let loadWithServerId = function(_serverId) {
+var loadWithServerId = function(_serverId) {
   process.env.SPINALHUB_IP = "localhost";
   process.env.SPINALHUB_PORT = 7777;
 
@@ -58,19 +71,21 @@ let loadWithServerId = function(_serverId) {
       process.env.SPINALHUB_PORT +
       "/"
   );
+  // console.log(global.FileSystem.get_inst());
+  // global.FileSystem._disp = true;
 
   connection.load_ptr(_serverId, function(model) {
     if (model instanceof global.Model) {
-      console.log("start Translating");
       SpinalIfcSystem(model)
         .then(() => {
-          isReady(model, cb);
+          isReady(model, cb.bind(null, model));
         })
         .catch(e => {
-          console.log(e);
+          console.log("Error writing the model " + e);
         });
     }
   });
 };
 
-loadWithServerId(process.argv[2]);
+module.exports = loadWithServerId;
+loadWithServerId(process.argv[3]);

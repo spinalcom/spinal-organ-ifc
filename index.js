@@ -23,12 +23,10 @@
  */
 
 var spinalCore = require("spinal-core-connectorjs");
-const fs = require("fs");
 var Q = require("q");
 var IfcFileItem = require("./spinal-models_ifcfile/ifcfile").IfcFileItem;
-var SpinalIfcFile = require("./SpinalIfcFile");
-// const exec = require("child_process").exec;
 var spawn = require("child_process").spawn;
+const fs = require("fs");
 
 if (!process.env.CLIENT_ID) {
   console.log("default config");
@@ -51,6 +49,17 @@ const connect_opt =
   "/";
 
 var conn = spinalCore.connect(connect_opt);
+
+// let speInputFolder = "ifc_specifications";
+// let speArray = [];
+// fs.readdirSync(speInputFolder).forEach(file => {
+//   file = file.replace(/\.[^/.]+$/, ""); //remove extension
+//   console.log("test");
+
+//   speArray.push(file);
+// });
+// const ifcSpecificationsParser = require("./src/parsers/ifcSpecificationsParser");
+// ifcSpecificationsParser(speArray);
 
 var err_connect = function(err) {
   if (!err) console.log("Error Connect.");
@@ -78,8 +87,7 @@ let callback_success = file => {
       file &&
       file._info &&
       file._info.model_type &&
-      (file._info.model_type.get() === "BIM Project" ||
-        file._info.model_type.get() === "Ifc twin")
+      file._info.model_type.get() === "Ifc twin"
     ) {
       if (file._ptr && file._ptr.data.value === 0) {
         let ifcFileItem = new IfcFileItem();
@@ -99,27 +107,22 @@ let callback_success = file => {
                 state: ifcFileItem.state
               });
             }, 1000);
-            // new SpinalIfcSystem(ifcFileItem, file);
-
-            // exec("SpinalIfcSystem(ifcFileItem, file);", (e, stdout, stderr) => {
-            //   if (e instanceof Error) {
-            //     console.error(e);
-            //     throw e;
-            //   }
-            //   console.log("stdout ", stdout);
-            //   console.log("stderr ", stderr);
-            // });
             let cb = function(script, model) {
-              let child = spawn("./" + script, [model._server_id.toString()]);
-              child.stdout.on("data", function(data) {
-                console.log(data.toString());
-              });
-              child.stderr.on("data", function(data) {
-                console.error(data.toString());
-              });
-            };
-            // spawn("ls");
+              // const pro = require("./pro");
+              // pro(model._server_id);
 
+              let test = new run_cmd(
+                script,
+                model,
+                (me, buffer) => {
+                  // console.log(buffer.toString());
+                  me.stdout += buffer.toString();
+                },
+                () => {
+                  console.log(test.stdout);
+                }
+              );
+            };
             isReady(ifcFileItem, cb.bind(null, "pro.js", ifcFileItem));
           });
         }
@@ -129,6 +132,23 @@ let callback_success = file => {
 };
 spinalCore.load_type(conn, "File", callback_success, err_connect);
 
+let run_cmd = function(cmd, args, cb, end) {
+  var spawn = require("child_process").spawn,
+    child = spawn("./" + cmd, [
+      "--max-old-space-size=8192",
+      args._server_id.toString()
+    ]),
+    me = this;
+  me.stdout = "";
+  child.stderr.on("data", function(buffer) {
+    cb(me, buffer);
+  });
+  child.stdout.on("data", function(buffer) {
+    cb(me, buffer);
+  });
+  child.stdout.on("end", end);
+};
+
 let isReady = function(model, cb) {
   if (!model._server_id || global.FileSystem._tmp_objects[model._server_id])
     setTimeout(() => {
@@ -136,49 +156,5 @@ let isReady = function(model, cb) {
     }, 1000);
   else {
     cb();
-    console.log("ready");
   }
-};
-
-let SpinalIfcSystem = function(model) {
-  let version = "IFC4_2";
-  // let speInputFolder = "ifc_specifications";
-  // let speArray = [];
-  // fs.readdirSync(speInputFolder).forEach(file => {
-  //   file = file.replace(/\.[^/.]+$/, ""); //remove extension
-  //   speArray.push(file);
-  // });
-  // const ifcSpecificationsParser = require("./src/parsers/ifcSpecificationsParser");
-  // ifcSpecificationsParser(speArray);
-
-  // const ifcParser = require("./src/parsers/ifcParser");
-  // return ifcParser(["test"]).then(() => {
-  //   const objectGenerator = require("./src/generators/objectGenerator");
-  //   objectGenerator(["test"], version);
-  //   console.log("done");
-  // });
-
-  // var _self = this;
-  // SpinalForgeSystem.super(this, model);
-  var file_name = model.name
-    .get()
-    .replace(/ *\t*(%20)*\(([0-9]*)\)(%20)* *\t*/, "");
-
-  let cb = function() {
-    let extension = file_name.match(/\.[^/.]+$/);
-    file_name = file_name.replace(/\.[^/.]+$/, ""); //remove extension
-    if (model.state.get() === "parse Ifc") {
-      const ifcParser = require("./src/parsers/ifcParser");
-      return ifcParser([file_name], extension).then(() => {
-        const objectGenerator = require("./src/generators/objectGenerator");
-        objectGenerator(model, [file_name], version, extension);
-        // console.log(list);
-        // model.add_child(list);
-        console.log("done");
-      });
-    }
-  };
-
-  var spinalIfcFile = new SpinalIfcFile(model, file_name);
-  spinalIfcFile.download_file(cb);
 };

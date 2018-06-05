@@ -27,6 +27,7 @@ var request = require("request");
 
 function SpinalIfcFile(model, file_name) {
   var _self = this;
+  file_name = "./ifc/" + file_name;
 
   this.download = function(url, dest, cb) {
     var file = fs.createWriteStream(dest);
@@ -75,8 +76,7 @@ function SpinalIfcFile(model, file_name) {
       "/sceen/_?u=" +
       model.filepath._server_id;
     fs.unlink(file_name, function() {
-      _self.download(url, file_name, function(res) {
-        console.log(res);
+      _self.download(url, file_name, function() {
         _cb();
       });
     });

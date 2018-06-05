@@ -1,5 +1,5 @@
 {
-  "filename": "/home/hossam/SpinalCom/spinal-organ-ifc/test.ifc",
+  "filename": "/home/hossam/SpinalCom/spinal-organ-ifc/ifc/test.ifc",
   "input": {
     "_readableState": {
       "objectMode": false,
@@ -291,7 +291,7 @@
           {
             "_id": "56",
             "type": "IFCRECTANGLEPROFILEDEF",
-            "line": "('.AREA.','PL70'*'50',_res[55],50.,70.)"
+            "line": "('.AREA.','PL70*50',_res[55],50.,70.)"
           },
           {
             "_id": "57",
@@ -366,7 +366,7 @@
           {
             "_id": "71",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','BL80'*'7',_res[70])"
+            "line": "('.AREA.','BL80*7',_res[70])"
           },
           {
             "_id": "72",
@@ -471,12 +471,12 @@
           {
             "_id": "92",
             "type": "IFCCOLUMN",
-            "line": "('1QPa5X0003yJ4rCJOsDZ0o',_res[5],'CUTPART','PL70'*'50','PL70'*'50',_res[48],_res[91],'0-0[?]')"
+            "line": "('1QPa5X0003yJ4rCJOsDZ0o',_res[5],'CUTPART','PL70*50','PL70*50',_res[48],_res[91],'0-0[?]')"
           },
           {
             "_id": "93",
             "type": "IFCCOLUMNTYPE",
-            "line": "('3HeVA0kqTBXhn4JmrxW9vn',_res[5],'PL70'*'50','$','$','$','$','$','$','.NOTDEFINED.')"
+            "line": "('3HeVA0kqTBXhn4JmrxW9vn',_res[5],'PL70*50','$','$','$','$','$','$','.NOTDEFINED.')"
           },
           {
             "_id": "94",
@@ -666,7 +666,7 @@
           {
             "_id": "131",
             "type": "IFCCOLUMN",
-            "line": "('1QPa5X0003rJ4rCJOsDZ0o',_res[5],'CUTPART','PL70'*'50','PL70'*'50',_res[124],_res[130],'0-0[?]')"
+            "line": "('1QPa5X0003rJ4rCJOsDZ0o',_res[5],'CUTPART','PL70*50','PL70*50',_res[124],_res[130],'0-0[?]')"
           },
           {
             "_id": "132",
@@ -1126,7 +1126,7 @@
           {
             "_id": "223",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','PL16'*'270',_res[222])"
+            "line": "('.AREA.','PL16*270',_res[222])"
           },
           {
             "_id": "224",
@@ -1206,7 +1206,7 @@
           {
             "_id": "239",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','BL22'*'270',_res[238])"
+            "line": "('.AREA.','BL22*270',_res[238])"
           },
           {
             "_id": "240",
@@ -1246,7 +1246,7 @@
           {
             "_id": "247",
             "type": "IFCDISCRETEACCESSORY",
-            "line": "('1QPa5X0002mp4rCJOsDJOs',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16'*'270','PL16'*'270',_res[210],_res[246],'5[?]')"
+            "line": "('1QPa5X0002mp4rCJOsDJOs',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16*270','PL16*270',_res[210],_res[246],'5[?]')"
           },
           {
             "_id": "248",
@@ -1606,7 +1606,7 @@
           {
             "_id": "319",
             "type": "IFCRECTANGLEPROFILEDEF",
-            "line": "('.AREA.','PL58'*'31',_res[55],31.,58.)"
+            "line": "('.AREA.','PL58*31',_res[55],31.,58.)"
           },
           {
             "_id": "320",
@@ -1626,7 +1626,7 @@
           {
             "_id": "323",
             "type": "IFCRECTANGLEPROFILEDEF",
-            "line": "('.AREA.','PL50'*'25',_res[55],25.,50.)"
+            "line": "('.AREA.','PL50*25',_res[55],25.,50.)"
           },
           {
             "_id": "324",
@@ -1786,7 +1786,7 @@
           {
             "_id": "355",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','BL63'*'37',_res[354])"
+            "line": "('.AREA.','BL63*37',_res[354])"
           },
           {
             "_id": "356",
@@ -1831,12 +1831,12 @@
           {
             "_id": "364",
             "type": "IFCBEAM",
-            "line": "('1QP5PK0004MJ4rCJOrCZWr',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58'*'31','PL58'*'31',_res[316],_res[363],'19[?]')"
+            "line": "('1QP5PK0004MJ4rCJOrCZWr',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58*31','PL58*31',_res[316],_res[363],'19[?]')"
           },
           {
             "_id": "365",
             "type": "IFCBEAMTYPE",
-            "line": "('0vMM9df99EQPeRzZsmMew8',_res[5],'PL58'*'31','$','$','$','$','$','$','.NOTDEFINED.')"
+            "line": "('0vMM9df99EQPeRzZsmMew8',_res[5],'PL58*31','$','$','$','$','$','$','.NOTDEFINED.')"
           },
           {
             "_id": "366",
@@ -1981,7 +1981,7 @@
           {
             "_id": "394",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','BL63'*'37',_res[393])"
+            "line": "('.AREA.','BL63*37',_res[393])"
           },
           {
             "_id": "395",
@@ -2006,7 +2006,7 @@
           {
             "_id": "399",
             "type": "IFCBEAM",
-            "line": "('1QP5PK0004Ip4rCJOrCZWr',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58'*'31','PL58'*'31',_res[387],_res[398],'19[?]')"
+            "line": "('1QP5PK0004Ip4rCJOrCZWr',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58*31','PL58*31',_res[387],_res[398],'19[?]')"
           },
           {
             "_id": "400",
@@ -2076,7 +2076,7 @@
           {
             "_id": "413",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','BL63'*'37',_res[412])"
+            "line": "('.AREA.','BL63*37',_res[412])"
           },
           {
             "_id": "414",
@@ -2101,7 +2101,7 @@
           {
             "_id": "418",
             "type": "IFCBEAM",
-            "line": "('1QP5PK0004FJ4rCJOrCZWr',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58'*'31','PL58'*'31',_res[408],_res[417],'19[?]')"
+            "line": "('1QP5PK0004FJ4rCJOrCZWr',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58*31','PL58*31',_res[408],_res[417],'19[?]')"
           },
           {
             "_id": "419",
@@ -2161,7 +2161,7 @@
           {
             "_id": "430",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','BL63'*'37',_res[429])"
+            "line": "('.AREA.','BL63*37',_res[429])"
           },
           {
             "_id": "431",
@@ -2186,7 +2186,7 @@
           {
             "_id": "435",
             "type": "IFCBEAM",
-            "line": "('1QP5PK00040p4rCJOrCZWq',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58'*'31','PL58'*'31',_res[423],_res[434],'19[?]')"
+            "line": "('1QP5PK00040p4rCJOrCZWq',_res[5],'\\\\X2\\\\041E043F043E04400430005F041D00320035002D003500300427041A\\\\X0\\\\','PL58*31','PL58*31',_res[423],_res[434],'19[?]')"
           },
           {
             "_id": "436",
@@ -3441,7 +3441,7 @@
           {
             "_id": "686",
             "type": "IFCCIRCLEPROFILEDEF",
-            "line": "('.AREA.','O10'*'2',_res[55],5.)"
+            "line": "('.AREA.','O10*2',_res[55],5.)"
           },
           {
             "_id": "687",
@@ -3731,7 +3731,7 @@
           {
             "_id": "744",
             "type": "IFCCIRCLEHOLLOWPROFILEDEF",
-            "line": "('.AREA.','O10'*'2',_res[55],5.,2.)"
+            "line": "('.AREA.','O10*2',_res[55],5.,2.)"
           },
           {
             "_id": "745",
@@ -3766,12 +3766,12 @@
           {
             "_id": "751",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001u34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[739],_res[750],'10[?]')"
+            "line": "('1QOxpU0001u34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[739],_res[750],'10[?]')"
           },
           {
             "_id": "752",
             "type": "IFCBEAMTYPE",
-            "line": "('23y7tOnOnFOgjZcIQRWfun',_res[5],'O10'*'2','$','$','$','$','$','$','.NOTDEFINED.')"
+            "line": "('23y7tOnOnFOgjZcIQRWfun',_res[5],'O10*2','$','$','$','$','$','$','.NOTDEFINED.')"
           },
           {
             "_id": "753",
@@ -3891,7 +3891,7 @@
           {
             "_id": "776",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001t34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[773],_res[775],'10[?]')"
+            "line": "('1QOxpU0001t34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[773],_res[775],'10[?]')"
           },
           {
             "_id": "777",
@@ -3961,7 +3961,7 @@
           {
             "_id": "790",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001s34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[787],_res[789],'10[?]')"
+            "line": "('1QOxpU0001s34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[787],_res[789],'10[?]')"
           },
           {
             "_id": "791",
@@ -4051,7 +4051,7 @@
           {
             "_id": "808",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001r34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[805],_res[807],'10[?]')"
+            "line": "('1QOxpU0001r34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[805],_res[807],'10[?]')"
           },
           {
             "_id": "809",
@@ -4121,7 +4121,7 @@
           {
             "_id": "822",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001q34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[819],_res[821],'10[?]')"
+            "line": "('1QOxpU0001q34rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[819],_res[821],'10[?]')"
           },
           {
             "_id": "823",
@@ -4421,7 +4421,7 @@
           {
             "_id": "882",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001Yp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[879],_res[881],'10[?]')"
+            "line": "('1QOxpU0001Yp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[879],_res[881],'10[?]')"
           },
           {
             "_id": "883",
@@ -4481,7 +4481,7 @@
           {
             "_id": "894",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001Xp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[891],_res[893],'10[?]')"
+            "line": "('1QOxpU0001Xp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[891],_res[893],'10[?]')"
           },
           {
             "_id": "895",
@@ -4521,7 +4521,7 @@
           {
             "_id": "902",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001Wp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[899],_res[901],'10[?]')"
+            "line": "('1QOxpU0001Wp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[899],_res[901],'10[?]')"
           },
           {
             "_id": "903",
@@ -4581,7 +4581,7 @@
           {
             "_id": "914",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001Vp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[911],_res[913],'10[?]')"
+            "line": "('1QOxpU0001Vp4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[911],_res[913],'10[?]')"
           },
           {
             "_id": "915",
@@ -4621,7 +4621,7 @@
           {
             "_id": "922",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0001Up4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[919],_res[921],'10[?]')"
+            "line": "('1QOxpU0001Up4rCJOqEJGu',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[919],_res[921],'10[?]')"
           },
           {
             "_id": "923",
@@ -4696,7 +4696,7 @@
           {
             "_id": "937",
             "type": "IFCBEAM",
-            "line": "('1QOxpU0000VJ4rCJOqE3ar',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[934],_res[936],'10[?]')"
+            "line": "('1QOxpU0000VJ4rCJOqE3ar',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[934],_res[936],'10[?]')"
           },
           {
             "_id": "938",
@@ -5166,7 +5166,7 @@
           {
             "_id": "1031",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','PL16'*'500',_res[1030])"
+            "line": "('.AREA.','PL16*500',_res[1030])"
           },
           {
             "_id": "1032",
@@ -5191,7 +5191,7 @@
           {
             "_id": "1036",
             "type": "IFCDISCRETEACCESSORY",
-            "line": "('1QOGGq000BNZ4rCJOpC3ao',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16'*'500','PL16'*'500',_res[1025],_res[1035],'8[?]')"
+            "line": "('1QOGGq000BNZ4rCJOpC3ao',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16*500','PL16*500',_res[1025],_res[1035],'8[?]')"
           },
           {
             "_id": "1037",
@@ -5326,7 +5326,7 @@
           {
             "_id": "1063",
             "type": "IFCDISCRETEACCESSORY",
-            "line": "('1QOGGq000BMp4rCJOpC3an',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16'*'500','PL16'*'500',_res[1060],_res[1062],'7[?]')"
+            "line": "('1QOGGq000BMp4rCJOpC3an',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16*500','PL16*500',_res[1060],_res[1062],'7[?]')"
           },
           {
             "_id": "1064",
@@ -5406,7 +5406,7 @@
           {
             "_id": "1079",
             "type": "IFCDISCRETEACCESSORY",
-            "line": "('1QOGGq000BIp4rCJOpC3Wv',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16'*'270','PL16'*'270',_res[1075],_res[1078],'5[?]')"
+            "line": "('1QOGGq000BIp4rCJOpC3Wv',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16*270','PL16*270',_res[1075],_res[1078],'5[?]')"
           },
           {
             "_id": "1080",
@@ -5481,7 +5481,7 @@
           {
             "_id": "1094",
             "type": "IFCARBITRARYCLOSEDPROFILEDEF",
-            "line": "('.AREA.','PL16'*'270',_res[1093])"
+            "line": "('.AREA.','PL16*270',_res[1093])"
           },
           {
             "_id": "1095",
@@ -5506,7 +5506,7 @@
           {
             "_id": "1099",
             "type": "IFCDISCRETEACCESSORY",
-            "line": "('1QOGGq000BHp4rCJOpC3Wu',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16'*'270','PL16'*'270',_res[1090],_res[1098],'4[?]')"
+            "line": "('1QOGGq000BHp4rCJOpC3Wu',_res[5],'\\\\X2\\\\04110430043B043A0430\\\\X0\\\\','PL16*270','PL16*270',_res[1090],_res[1098],'4[?]')"
           },
           {
             "_id": "1100",
@@ -5661,7 +5661,7 @@
           {
             "_id": "1130",
             "type": "IFCBEAM",
-            "line": "('1QOGGq000BBZ4rCJOpC3Wr',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10'*'2','O10'*'2',_res[1127],_res[1129],'10[?]')"
+            "line": "('1QOGGq000BBZ4rCJOpC3Wr',_res[5],'\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','O10*2','O10*2',_res[1127],_res[1129],'10[?]')"
           },
           {
             "_id": "1131",
@@ -6547,6 +6547,21 @@
             "_id": "1307",
             "type": "IFCPRESENTATIONLAYERASSIGNMENT",
             "line": "('\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','$',[_res[748],_res[774],_res[788],_res[806],_res[820],_res[880],_res[892],_res[900],_res[912],_res[920],_res[935],_res[1128]],'$')"
+          },
+          {
+            "_id": "1308",
+            "type": "IFCPROPERTYSINGLEVALUE",
+            "line": "('Retournement aux extrémités','$',new TYPES.IFCIDENTIFIER('Aucun[e)'),'$')"
+          },
+          {
+            "_id": "1309",
+            "type": "IFCPROPERTYSINGLEVALUE",
+            "line": "('Titre OmniClass','$',new TYPES.IFCTEXT('Climate Control [HVAC)'),'$')"
+          },
+          {
+            "_id": "1310",
+            "type": "IFCPROPERTYSINGLEVALUE",
+            "line": "('Classification du système','$',new TYPES.IFCTEXT('Puissance,Retour hydraulique,Eau froide sanitaire,Alimentation hydraulique,Eau chaude sanitaire,Autre,Sanitaire,Donnée'),'$')"
           }
         ],
         "types": {
@@ -7197,7 +7212,10 @@
               "1100",
               "1101",
               "1102",
-              "1104"
+              "1104",
+              "1308",
+              "1309",
+              "1310"
             ]
           },
           "IFCPROPERTYSET": {
@@ -8253,7 +8271,7 @@
         "patternSimple": {},
         "patternComplex": {},
         "startLinePattern": {},
-        "curLine": "IFCPRESENTATIONLAYERASSIGNMENT('\\\\X2\\\\041204420443043B043A0430005F041C0036005800320030005F004100520054005F0039003000370030\\\\X0\\\\','$',[_res[748],_res[774],_res[788],_res[806],_res[820],_res[880],_res[892],_res[900],_res[912],_res[920],_res[935],_res[1128]],$];",
+        "curLine": "IFCPROPERTYSINGLEVALUE('Classification du système','$',new TYPES.IFCTEXT('Puissance,Retour hydraulique,Eau froide sanitaire,Alimentation hydraulique,Eau chaude sanitaire,Autre,Sanitaire,Donnée'),$];",
         "bad_STEP_file": false,
         "status": 5,
         "header": [
@@ -8264,7 +8282,7 @@
         "input": "~input",
         "_events": {},
         "_eventsCount": 5,
-        "curNum": "1307"
+        "curNum": "1310"
       },
       "pipesCount": 1,
       "flowing": true,
@@ -8286,13 +8304,13 @@
     "readable": false,
     "_events": {},
     "_eventsCount": 2,
-    "path": "/home/hossam/SpinalCom/spinal-organ-ifc/test.ifc",
+    "path": "/home/hossam/SpinalCom/spinal-organ-ifc/ifc/test.ifc",
     "fd": null,
     "flags": "r",
     "mode": 438,
     "end": null,
     "autoClose": true,
-    "bytesRead": 94004,
+    "bytesRead": 94422,
     "closed": false
   },
   "indexer": "~input~_readableState~pipes"

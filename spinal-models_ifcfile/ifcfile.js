@@ -54,7 +54,7 @@ var IfcFileItem = class IfcFileItem extends organType.Model {
     let tmp = {
       _name: name,
       _viewable: false,
-      _children: [],
+      _children: new organType.Model(),
       name: name,
       filepath: new organType.Path(),
       state: new organType.Choice(0, [
@@ -68,8 +68,10 @@ var IfcFileItem = class IfcFileItem extends organType.Model {
     };
     this.add_attr(tmp);
   }
-  add_child(child) {
-    this._children.push(child);
+  add_child(_name, _child) {
+    this._children.add_attr({
+      [_name]: _child
+    });
   }
   //   accept_child(ch) {
   //     return ch instanceof IfcFileDerivativesItem;

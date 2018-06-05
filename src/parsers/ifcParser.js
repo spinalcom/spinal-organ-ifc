@@ -6,8 +6,8 @@ const JSON = require("circular-json");
 let ifcParser = function(_inputFiles, _ext) {
   console.time("ifcParser");
   let promises = _inputFiles.map(file => {
-    // const inputFile = path.resolve(__dirname + "/../../ifc/" + file + _ext);
-    const inputFile = path.resolve(__dirname + "/../../" + file + _ext);
+    const inputFile = path.resolve(__dirname + "/../../ifc/" + file + _ext);
+    // const inputFile = path.resolve(__dirname + "/../../" + file + _ext);
     const outputFile = path.resolve(
       __dirname + "/../../processing_files/" + file + ".json"
     );
