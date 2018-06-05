@@ -24,7 +24,7 @@
 
 var spinalCore = require("spinal-core-connectorjs");
 var Q = require("q");
-var IfcFileItem = require("./spinal-models_ifcfile/ifcfile").IfcFileItem;
+var IfcFileItem = require("./src/models/IFCFile").IfcFileItem;
 var spawn = require("child_process").spawn;
 const fs = require("fs");
 
@@ -50,16 +50,14 @@ const connect_opt =
 
 var conn = spinalCore.connect(connect_opt);
 
-// let speInputFolder = "ifc_specifications";
-// let speArray = [];
-// fs.readdirSync(speInputFolder).forEach(file => {
-//   file = file.replace(/\.[^/.]+$/, ""); //remove extension
-//   console.log("test");
-
-//   speArray.push(file);
-// });
-// const ifcSpecificationsParser = require("./src/parsers/ifcSpecificationsParser");
-// ifcSpecificationsParser(speArray);
+let speInputFolder = "ifc_specifications";
+let speArray = [];
+fs.readdirSync(speInputFolder).forEach(file => {
+  file = file.replace(/\.[^/.]+$/, ""); //remove extension
+  speArray.push(file);
+});
+const ifcSpecificationsParser = require("./src/parsers/ifcSpecificationsParser");
+ifcSpecificationsParser(speArray);
 
 var err_connect = function(err) {
   if (!err) console.log("Error Connect.");
@@ -98,7 +96,8 @@ let callback_success = file => {
             if (file._info.ext && file._info.ext.get()) {
               ext = file._info.ext.get();
             }
-            ifcFileItem.name.set(file.name.get().toLowerCase() + "." + ext);
+            ifcFileItem.name.set(file.name.get().toLowerCase() + "." +
+              ext);
             file._ptr.set(ifcFileItem);
             ifcFileItem.mod_attr("filepath", tmp);
             // ifcFileItem.state.set("Uploading completed");
@@ -123,7 +122,10 @@ let callback_success = file => {
                 }
               );
             };
-            isReady(ifcFileItem, cb.bind(null, "pro.js", ifcFileItem));
+            isReady(
+              ifcFileItem,
+              cb.bind(null, "./src/translate.js", ifcFileItem)
+            );
           });
         }
       }
@@ -141,7 +143,7 @@ let run_cmd = function(cmd, args, cb, end) {
     me = this;
   me.stdout = "";
   child.stderr.on("data", function(buffer) {
-    cb(me, buffer);
+    console.log("spawn Error" + buffer);
   });
   child.stdout.on("data", function(buffer) {
     cb(me, buffer);

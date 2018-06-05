@@ -1,5 +1,10 @@
 {
   "_elements": {
+    "IfcStrippedOptional": {
+      "type": "type",
+      "name": "IfcStrippedOptional",
+      "type_type": "BOOLEAN"
+    },
     "IfcAbsorbedDoseMeasure": {
       "type": "type",
       "name": "IfcAbsorbedDoseMeasure",
@@ -29,6 +34,11 @@
       "type": "type",
       "name": "IfcAreaMeasure",
       "type_type": "REAL"
+    },
+    "IfcBinary": {
+      "type": "type",
+      "name": "IfcBinary",
+      "type_type": "BINARY"
     },
     "IfcBoolean": {
       "type": "type",
@@ -384,6 +394,11 @@
       "type": "type",
       "name": "IfcPlaneAngleMeasure",
       "type_type": "REAL"
+    },
+    "IfcPositiveInteger": {
+      "type": "type",
+      "name": "IfcPositiveInteger",
+      "type_type": "IfcInteger"
     },
     "IfcPositiveLengthMeasure": {
       "type": "type",
@@ -907,6 +922,7 @@
         "ELEMENT",
         "PARTIAL",
         "PROVISIONFORVOID",
+        "PROVISIONFORSPACE",
         "USERDEFINED",
         "NOTDEFINED"
       ]
@@ -1799,7 +1815,7 @@
         "EXTERNAL_WATER",
         "EXTERNAL_FIRE",
         "USERDEFINED",
-        "NOTDEFIEND"
+        "NOTDEFINED"
       ]
     },
     "IfcFanTypeEnum": {
@@ -2407,6 +2423,15 @@
         "NOTDEFINED"
       ]
     },
+    "IfcPreferredSurfaceCurveRepresentation": {
+      "type": "enumeration",
+      "name": "IfcPreferredSurfaceCurveRepresentation",
+      "enum": [
+        "CURVE3D",
+        "PCURVE_S1",
+        "PCURVE_S2"
+      ]
+    },
     "IfcProcedureTypeEnum": {
       "type": "enumeration",
       "name": "IfcProcedureTypeEnum",
@@ -2766,13 +2791,17 @@
       "type": "enumeration",
       "name": "IfcSensorTypeEnum",
       "enum": [
+        "COSENSOR",
+        "CO2SENSOR",
         "CONDUCTANCESENSOR",
         "CONTACTSENSOR",
         "FIRESENSOR",
         "FLOWSENSOR",
+        "FROSTSENSOR",
         "GASSENSOR",
         "HEATSENSOR",
         "HUMIDITYSENSOR",
+        "IDENTIFIERSENSOR",
         "IONCONCENTRATIONSENSOR",
         "LEVELSENSOR",
         "LIGHTSENSOR",
@@ -3516,7 +3545,8 @@
         "IfcBooleanResult",
         "IfcCsgPrimitive3D",
         "IfcHalfSpaceSolid",
-        "IfcSolidModel"
+        "IfcSolidModel",
+        "IfcTessellatedFaceSet"
       ]
     },
     "IfcClassificationReferenceSelect": {
@@ -3580,7 +3610,8 @@
       "name": "IfcCurveOnSurface",
       "list": [
         "IfcCompositeCurveOnSurface",
-        "IfcPcurve"
+        "IfcPcurve",
+        "IfcSurfaceCurve"
       ]
     },
     "IfcCurveOrEdgeCurve": {
@@ -3929,6 +3960,14 @@
         "IfcRotationalStiffnessMeasure"
       ]
     },
+    "IfcSegmentIndexSelect": {
+      "type": "select",
+      "name": "IfcSegmentIndexSelect",
+      "list": [
+        "IfcArcIndex",
+        "IfcLineIndex"
+      ]
+    },
     "IfcShell": {
       "type": "select",
       "name": "IfcShell",
@@ -3941,6 +3980,7 @@
       "type": "select",
       "name": "IfcSimpleValue",
       "list": [
+        "IfcBinary",
         "IfcBoolean",
         "IfcDate",
         "IfcDateTime",
@@ -3949,6 +3989,7 @@
         "IfcInteger",
         "IfcLabel",
         "IfcLogical",
+        "IfcPositiveInteger",
         "IfcReal",
         "IfcText",
         "IfcTime",
@@ -4965,7 +5006,7 @@
       "properties": [
         {
           "identifier": "Degree",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": false
         },
         {
@@ -4984,12 +5025,12 @@
         },
         {
           "identifier": "ClosedCurve",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -5017,7 +5058,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -5057,12 +5098,12 @@
       "properties": [
         {
           "identifier": "UDegree",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": false
         },
         {
           "identifier": "VDegree",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": false
         },
         {
@@ -5085,17 +5126,17 @@
         },
         {
           "identifier": "UClosed",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "VClosed",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -5123,7 +5164,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -5132,7 +5173,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -5243,7 +5284,7 @@
         },
         {
           "identifier": "RasterCode",
-          "composite_type": "BINARY",
+          "composite_type": "IfcBinary",
           "optional": false
         }
       ],
@@ -5563,6 +5604,7 @@
           "list_id": [
             "IfcBSplineCurve",
             "IfcCompositeCurve",
+            "IfcIndexedPolyCurve",
             "IfcPolyline",
             "IfcTrimmedCurve"
           ]
@@ -5860,6 +5902,11 @@
           "identifier": "PredefinedType",
           "composite_type": "IfcBuildingSystemTypeEnum",
           "optional": true
+        },
+        {
+          "identifier": "LongName",
+          "composite_type": "IfcLabel",
+          "optional": true
         }
       ],
       "abstract": [
@@ -6131,6 +6178,7 @@
         {
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
+            "IfcCartesianPointList2D",
             "IfcCartesianPointList3D"
           ]
         },
@@ -6138,6 +6186,33 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcGeometricRepresentationItem"
+          ]
+        }
+      ]
+    },
+    "IfcCartesianPointList2D": {
+      "type": "entity",
+      "name": "IfcCartesianPointList2D",
+      "properties": [
+        {
+          "identifier": "CoordList",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": {
+              "type": "LIST_RANGE_OF",
+              "range": "[",
+              "composite_type": "IfcLengthMeasure"
+            }
+          },
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcCartesianPointList"
           ]
         }
       ]
@@ -6190,7 +6265,7 @@
         },
         {
           "identifier": "Scale",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         }
       ],
@@ -6235,7 +6310,7 @@
       "properties": [
         {
           "identifier": "Scale2",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         }
       ],
@@ -6279,12 +6354,12 @@
       "properties": [
         {
           "identifier": "Scale2",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         },
         {
           "identifier": "Scale3",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         }
       ],
@@ -6864,7 +6939,7 @@
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -6913,7 +6988,7 @@
         },
         {
           "identifier": "SameSense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
@@ -7783,7 +7858,7 @@
         {
           "identifier": "Name",
           "composite_type": "IfcLabel",
-          "optional": true
+          "optional": false
         },
         {
           "identifier": "Description",
@@ -7793,7 +7868,7 @@
         {
           "identifier": "GeodeticDatum",
           "composite_type": "IfcIdentifier",
-          "optional": false
+          "optional": true
         },
         {
           "identifier": "VerticalDatum",
@@ -8108,7 +8183,8 @@
             "IfcLine",
             "IfcOffsetCurve2D",
             "IfcOffsetCurve3D",
-            "IfcPcurve"
+            "IfcPcurve",
+            "IfcSurfaceCurve"
           ]
         },
         {
@@ -8170,7 +8246,7 @@
         },
         {
           "identifier": "ImplicitOuter",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -8204,7 +8280,7 @@
         },
         {
           "identifier": "ModelOrDraughting",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -8480,7 +8556,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "REAL"
+            "composite_type": "IfcReal"
           },
           "optional": false
         }
@@ -9136,12 +9212,12 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Sizeable",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -9170,7 +9246,7 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -9371,7 +9447,7 @@
         },
         {
           "identifier": "SameSense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -9834,7 +9910,9 @@
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
             "IfcCylindricalSurface",
-            "IfcPlane"
+            "IfcPlane",
+            "IfcSphericalSurface",
+            "IfcToroidalSurface"
           ]
         },
         {
@@ -10482,7 +10560,7 @@
         },
         {
           "identifier": "Orientation",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -10525,7 +10603,7 @@
         },
         {
           "identifier": "SameSense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -10779,7 +10857,7 @@
         },
         {
           "identifier": "ModelorDraughting",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -11564,7 +11642,7 @@
         },
         {
           "identifier": "Precision",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         },
         {
@@ -11820,7 +11898,7 @@
         },
         {
           "identifier": "AgreementFlag",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -11994,8 +12072,8 @@
           "optional": false
         },
         {
-          "identifier": "Overrides",
-          "composite_type": "IfcSurfaceStyleShading",
+          "identifier": "Opacity",
+          "composite_type": "IfcNormalisedRatioMeasure",
           "optional": true
         },
         {
@@ -12008,7 +12086,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcPositiveInteger"
           },
           "optional": false
         }
@@ -12018,6 +12096,94 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcPresentationItem"
+          ]
+        }
+      ]
+    },
+    "IfcIndexedPolyCurve": {
+      "type": "entity",
+      "name": "IfcIndexedPolyCurve",
+      "properties": [
+        {
+          "identifier": "Points",
+          "composite_type": "IfcCartesianPointList",
+          "optional": false
+        },
+        {
+          "identifier": "Segments",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcSegmentIndexSelect"
+          },
+          "optional": true
+        },
+        {
+          "identifier": "SelfIntersect",
+          "composite_type": "IfcBoolean",
+          "optional": true
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcBoundedCurve"
+          ]
+        }
+      ]
+    },
+    "IfcIndexedPolygonalFace": {
+      "type": "entity",
+      "name": "IfcIndexedPolygonalFace",
+      "properties": [
+        {
+          "identifier": "CoordIndex",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcPositiveInteger"
+          },
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUPERTYPE_OF_ONEOF",
+          "list_id": [
+            "IfcIndexedPolygonalFaceWithVoids"
+          ]
+        },
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcTessellatedItem"
+          ]
+        }
+      ]
+    },
+    "IfcIndexedPolygonalFaceWithVoids": {
+      "type": "entity",
+      "name": "IfcIndexedPolygonalFaceWithVoids",
+      "properties": [
+        {
+          "identifier": "InnerCoordIndices",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": {
+              "type": "LIST_RANGE_OF_UNIQUE",
+              "composite_type": "IfcPositiveInteger"
+            }
+          },
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcIndexedPolygonalFace"
           ]
         }
       ]
@@ -12064,7 +12230,7 @@
             "composite_type": {
               "type": "LIST_RANGE_OF",
               "range": "[",
-              "composite_type": "INTEGER"
+              "composite_type": "IfcPositiveInteger"
             }
           },
           "optional": true
@@ -12113,6 +12279,19 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcFlowTreatmentDeviceType"
+          ]
+        }
+      ]
+    },
+    "IfcIntersectionCurve": {
+      "type": "entity",
+      "name": "IfcIntersectionCurve",
+      "properties": [],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcSurfaceCurve"
           ]
         }
       ]
@@ -13103,7 +13282,7 @@
         },
         {
           "identifier": "Priority",
-          "composite_type": "IfcNormalisedRatioMeasure",
+          "composite_type": "IfcInteger",
           "optional": true
         }
       ],
@@ -13262,7 +13441,7 @@
         },
         {
           "identifier": "Priority",
-          "composite_type": "IfcNormalisedRatioMeasure",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
@@ -13656,7 +13835,7 @@
         {
           "identifier": "DataValue",
           "composite_type": "IfcMetricValueSelect",
-          "optional": false
+          "optional": true
         },
         {
           "identifier": "ReferencePath",
@@ -13899,7 +14078,7 @@
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -13928,7 +14107,7 @@
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
@@ -14074,7 +14253,7 @@
         },
         {
           "identifier": "Orientation",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -14683,10 +14862,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": {
-              "type": "BINARY",
-              "size": "32"
-            }
+            "composite_type": "IfcBinary"
           },
           "optional": false
         }
@@ -14962,6 +15138,43 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcHalfSpaceSolid"
+          ]
+        }
+      ]
+    },
+    "IfcPolygonalFaceSet": {
+      "type": "entity",
+      "name": "IfcPolygonalFaceSet",
+      "properties": [
+        {
+          "identifier": "Closed",
+          "composite_type": "IfcBoolean",
+          "optional": true
+        },
+        {
+          "identifier": "Faces",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcIndexedPolygonalFace"
+          },
+          "optional": false
+        },
+        {
+          "identifier": "PnIndex",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcPositiveInteger"
+          },
+          "optional": true
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcTessellatedFaceSet"
           ]
         }
       ]
@@ -15262,17 +15475,17 @@
       "properties": [
         {
           "identifier": "LayerOn",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "LayerFrozen",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "LayerBlocked",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
@@ -16489,7 +16702,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "REAL"
+            "composite_type": "IfcReal"
           },
           "optional": false
         }
@@ -16515,7 +16728,7 @@
             "composite_type": {
               "type": "LIST_RANGE_OF",
               "range": "[",
-              "composite_type": "REAL"
+              "composite_type": "IfcReal"
             }
           },
           "optional": false
@@ -16650,12 +16863,12 @@
         },
         {
           "identifier": "Usense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Vsense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -16751,7 +16964,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": true
         },
@@ -17580,7 +17793,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "NUMBER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -17589,7 +17802,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "NUMBER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -18683,7 +18896,7 @@
         },
         {
           "identifier": "IsOverAllocated",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -19021,6 +19234,19 @@
         }
       ]
     },
+    "IfcSeamCurve": {
+      "type": "entity",
+      "name": "IfcSeamCurve",
+      "properties": [],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcSurfaceCurve"
+          ]
+        }
+      ]
+    },
     "IfcSectionProperties": {
       "type": "entity",
       "name": "IfcSectionProperties",
@@ -19235,7 +19461,7 @@
         },
         {
           "identifier": "ProductDefinitional",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
@@ -19825,6 +20051,25 @@
         }
       ]
     },
+    "IfcSphericalSurface": {
+      "type": "entity",
+      "name": "IfcSphericalSurface",
+      "properties": [
+        {
+          "identifier": "Radius",
+          "composite_type": "IfcPositiveLengthMeasure",
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcElementarySurface"
+          ]
+        }
+      ]
+    },
     "IfcStackTerminal": {
       "type": "entity",
       "name": "IfcStackTerminal",
@@ -19887,13 +20132,13 @@
       "name": "IfcStairFlight",
       "properties": [
         {
-          "identifier": "NumberOfRiser",
-          "composite_type": "INTEGER",
+          "identifier": "NumberOfRisers",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
           "identifier": "NumberOfTreads",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
@@ -19965,7 +20210,7 @@
       "properties": [
         {
           "identifier": "DestabilizingLoad",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -20774,7 +21019,7 @@
         },
         {
           "identifier": "IsLinear",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -21034,6 +21279,46 @@
         }
       ]
     },
+    "IfcSurfaceCurve": {
+      "type": "entity",
+      "name": "IfcSurfaceCurve",
+      "properties": [
+        {
+          "identifier": "Curve3D",
+          "composite_type": "IfcCurve",
+          "optional": false
+        },
+        {
+          "identifier": "AssociatedGeometry",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcPcurve"
+          },
+          "optional": false
+        },
+        {
+          "identifier": "MasterRepresentation",
+          "composite_type": "IfcPreferredSurfaceCurveRepresentation",
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUPERTYPE_OF_ONEOF",
+          "list_id": [
+            "IfcIntersectionCurve",
+            "IfcSeamCurve"
+          ]
+        },
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcCurve"
+          ]
+        }
+      ]
+    },
     "IfcSurfaceCurveSweptAreaSolid": {
       "type": "entity",
       "name": "IfcSurfaceCurveSweptAreaSolid",
@@ -21257,11 +21542,6 @@
       "name": "IfcSurfaceStyleRendering",
       "properties": [
         {
-          "identifier": "Transparency",
-          "composite_type": "IfcNormalisedRatioMeasure",
-          "optional": true
-        },
-        {
           "identifier": "DiffuseColour",
           "composite_type": "IfcColourOrFactor",
           "optional": true
@@ -21314,6 +21594,11 @@
           "identifier": "SurfaceColour",
           "composite_type": "IfcColourRgb",
           "optional": false
+        },
+        {
+          "identifier": "Transparency",
+          "composite_type": "IfcNormalisedRatioMeasure",
+          "optional": true
         }
       ],
       "abstract": [
@@ -21360,12 +21645,12 @@
       "properties": [
         {
           "identifier": "RepeatS",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "RepeatT",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
@@ -21765,7 +22050,7 @@
         },
         {
           "identifier": "IsHeading",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ]
@@ -21824,12 +22109,12 @@
         },
         {
           "identifier": "IsMilestone",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Priority",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
@@ -21908,7 +22193,7 @@
         },
         {
           "identifier": "IsCritical",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -21962,7 +22247,7 @@
       "name": "IfcTaskTimeRecurring",
       "properties": [
         {
-          "identifier": "Recurrance",
+          "identifier": "Recurrence",
           "composite_type": "IfcRecurrencePattern",
           "optional": false
         }
@@ -22172,7 +22457,7 @@
           "optional": true
         },
         {
-          "identifier": "SheethDiameter",
+          "identifier": "SheathDiameter",
           "composite_type": "IfcPositiveLengthMeasure",
           "optional": true
         }
@@ -22194,30 +22479,13 @@
           "identifier": "Coordinates",
           "composite_type": "IfcCartesianPointList3D",
           "optional": false
-        },
-        {
-          "identifier": "Normals",
-          "composite_type": {
-            "type": "LIST_RANGE_OF",
-            "range": "[",
-            "composite_type": {
-              "type": "LIST_RANGE_OF",
-              "range": "[",
-              "composite_type": "IfcParameterValue"
-            }
-          },
-          "optional": true
-        },
-        {
-          "identifier": "Closed",
-          "composite_type": "BOOLEAN",
-          "optional": true
         }
       ],
       "abstract": [
         {
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
+            "IfcPolygonalFaceSet",
             "IfcTriangulatedFaceSet"
           ]
         },
@@ -22237,6 +22505,7 @@
         {
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
+            "IfcIndexedPolygonalFace",
             "IfcTessellatedFaceSet"
           ]
         },
@@ -22328,7 +22597,7 @@
         },
         {
           "identifier": "ModelOrDraughting",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -22718,6 +22987,30 @@
         }
       ]
     },
+    "IfcToroidalSurface": {
+      "type": "entity",
+      "name": "IfcToroidalSurface",
+      "properties": [
+        {
+          "identifier": "MajorRadius",
+          "composite_type": "IfcPositiveLengthMeasure",
+          "optional": false
+        },
+        {
+          "identifier": "MinorRadius",
+          "composite_type": "IfcPositiveLengthMeasure",
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcElementarySurface"
+          ]
+        }
+      ]
+    },
     "IfcTransformer": {
       "type": "entity",
       "name": "IfcTransformer",
@@ -22833,6 +23126,24 @@
       "name": "IfcTriangulatedFaceSet",
       "properties": [
         {
+          "identifier": "Normals",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": {
+              "type": "LIST_RANGE_OF",
+              "range": "[",
+              "composite_type": "IfcParameterValue"
+            }
+          },
+          "optional": true
+        },
+        {
+          "identifier": "Closed",
+          "composite_type": "IfcBoolean",
+          "optional": true
+        },
+        {
           "identifier": "CoordIndex",
           "composite_type": {
             "type": "LIST_RANGE_OF",
@@ -22840,21 +23151,17 @@
             "composite_type": {
               "type": "LIST_RANGE_OF",
               "range": "[",
-              "composite_type": "INTEGER"
+              "composite_type": "IfcPositiveInteger"
             }
           },
           "optional": false
         },
         {
-          "identifier": "NormalIndex",
+          "identifier": "PnIndex",
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": {
-              "type": "LIST_RANGE_OF",
-              "range": "[",
-              "composite_type": "INTEGER"
-            }
+            "composite_type": "IfcPositiveInteger"
           },
           "optional": true
         }
@@ -22895,7 +23202,7 @@
         },
         {
           "identifier": "SenseAgreement",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
@@ -23741,12 +24048,12 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Sizeable",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -23775,7 +24082,7 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -24311,6 +24618,7 @@
         "ELEMENT",
         "PARTIAL",
         "PROVISIONFORVOID",
+        "PROVISIONFORSPACE",
         "USERDEFINED",
         "NOTDEFINED"
       ]
@@ -25203,7 +25511,7 @@
         "EXTERNAL_WATER",
         "EXTERNAL_FIRE",
         "USERDEFINED",
-        "NOTDEFIEND"
+        "NOTDEFINED"
       ]
     },
     "IfcFanTypeEnum": {
@@ -25811,6 +26119,15 @@
         "NOTDEFINED"
       ]
     },
+    "IfcPreferredSurfaceCurveRepresentation": {
+      "type": "enumeration",
+      "name": "IfcPreferredSurfaceCurveRepresentation",
+      "enum": [
+        "CURVE3D",
+        "PCURVE_S1",
+        "PCURVE_S2"
+      ]
+    },
     "IfcProcedureTypeEnum": {
       "type": "enumeration",
       "name": "IfcProcedureTypeEnum",
@@ -26170,13 +26487,17 @@
       "type": "enumeration",
       "name": "IfcSensorTypeEnum",
       "enum": [
+        "COSENSOR",
+        "CO2SENSOR",
         "CONDUCTANCESENSOR",
         "CONTACTSENSOR",
         "FIRESENSOR",
         "FLOWSENSOR",
+        "FROSTSENSOR",
         "GASSENSOR",
         "HEATSENSOR",
         "HUMIDITYSENSOR",
+        "IDENTIFIERSENSOR",
         "IONCONCENTRATIONSENSOR",
         "LEVELSENSOR",
         "LIGHTSENSOR",
@@ -27753,7 +28074,7 @@
       "properties": [
         {
           "identifier": "Degree",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": false
         },
         {
@@ -27772,12 +28093,12 @@
         },
         {
           "identifier": "ClosedCurve",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -27805,7 +28126,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -27845,12 +28166,12 @@
       "properties": [
         {
           "identifier": "UDegree",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": false
         },
         {
           "identifier": "VDegree",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": false
         },
         {
@@ -27873,17 +28194,17 @@
         },
         {
           "identifier": "UClosed",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "VClosed",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -27911,7 +28232,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -27920,7 +28241,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -28031,7 +28352,7 @@
         },
         {
           "identifier": "RasterCode",
-          "composite_type": "BINARY",
+          "composite_type": "IfcBinary",
           "optional": false
         }
       ],
@@ -28351,6 +28672,7 @@
           "list_id": [
             "IfcBSplineCurve",
             "IfcCompositeCurve",
+            "IfcIndexedPolyCurve",
             "IfcPolyline",
             "IfcTrimmedCurve"
           ]
@@ -28648,6 +28970,11 @@
           "identifier": "PredefinedType",
           "composite_type": "IfcBuildingSystemTypeEnum",
           "optional": true
+        },
+        {
+          "identifier": "LongName",
+          "composite_type": "IfcLabel",
+          "optional": true
         }
       ],
       "abstract": [
@@ -28919,6 +29246,7 @@
         {
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
+            "IfcCartesianPointList2D",
             "IfcCartesianPointList3D"
           ]
         },
@@ -28926,6 +29254,33 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcGeometricRepresentationItem"
+          ]
+        }
+      ]
+    },
+    "IfcCartesianPointList2D": {
+      "type": "entity",
+      "name": "IfcCartesianPointList2D",
+      "properties": [
+        {
+          "identifier": "CoordList",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": {
+              "type": "LIST_RANGE_OF",
+              "range": "[",
+              "composite_type": "IfcLengthMeasure"
+            }
+          },
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcCartesianPointList"
           ]
         }
       ]
@@ -28978,7 +29333,7 @@
         },
         {
           "identifier": "Scale",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         }
       ],
@@ -29023,7 +29378,7 @@
       "properties": [
         {
           "identifier": "Scale2",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         }
       ],
@@ -29067,12 +29422,12 @@
       "properties": [
         {
           "identifier": "Scale2",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         },
         {
           "identifier": "Scale3",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         }
       ],
@@ -29652,7 +30007,7 @@
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -29701,7 +30056,7 @@
         },
         {
           "identifier": "SameSense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
@@ -30571,7 +30926,7 @@
         {
           "identifier": "Name",
           "composite_type": "IfcLabel",
-          "optional": true
+          "optional": false
         },
         {
           "identifier": "Description",
@@ -30581,7 +30936,7 @@
         {
           "identifier": "GeodeticDatum",
           "composite_type": "IfcIdentifier",
-          "optional": false
+          "optional": true
         },
         {
           "identifier": "VerticalDatum",
@@ -30896,7 +31251,8 @@
             "IfcLine",
             "IfcOffsetCurve2D",
             "IfcOffsetCurve3D",
-            "IfcPcurve"
+            "IfcPcurve",
+            "IfcSurfaceCurve"
           ]
         },
         {
@@ -30958,7 +31314,7 @@
         },
         {
           "identifier": "ImplicitOuter",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -30992,7 +31348,7 @@
         },
         {
           "identifier": "ModelOrDraughting",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -31268,7 +31624,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "REAL"
+            "composite_type": "IfcReal"
           },
           "optional": false
         }
@@ -31924,12 +32280,12 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Sizeable",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -31958,7 +32314,7 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -32159,7 +32515,7 @@
         },
         {
           "identifier": "SameSense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -32622,7 +32978,9 @@
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
             "IfcCylindricalSurface",
-            "IfcPlane"
+            "IfcPlane",
+            "IfcSphericalSurface",
+            "IfcToroidalSurface"
           ]
         },
         {
@@ -33270,7 +33628,7 @@
         },
         {
           "identifier": "Orientation",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -33313,7 +33671,7 @@
         },
         {
           "identifier": "SameSense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -33567,7 +33925,7 @@
         },
         {
           "identifier": "ModelorDraughting",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -34352,7 +34710,7 @@
         },
         {
           "identifier": "Precision",
-          "composite_type": "REAL",
+          "composite_type": "IfcReal",
           "optional": true
         },
         {
@@ -34608,7 +34966,7 @@
         },
         {
           "identifier": "AgreementFlag",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -34782,8 +35140,8 @@
           "optional": false
         },
         {
-          "identifier": "Overrides",
-          "composite_type": "IfcSurfaceStyleShading",
+          "identifier": "Opacity",
+          "composite_type": "IfcNormalisedRatioMeasure",
           "optional": true
         },
         {
@@ -34796,7 +35154,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcPositiveInteger"
           },
           "optional": false
         }
@@ -34806,6 +35164,94 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcPresentationItem"
+          ]
+        }
+      ]
+    },
+    "IfcIndexedPolyCurve": {
+      "type": "entity",
+      "name": "IfcIndexedPolyCurve",
+      "properties": [
+        {
+          "identifier": "Points",
+          "composite_type": "IfcCartesianPointList",
+          "optional": false
+        },
+        {
+          "identifier": "Segments",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcSegmentIndexSelect"
+          },
+          "optional": true
+        },
+        {
+          "identifier": "SelfIntersect",
+          "composite_type": "IfcBoolean",
+          "optional": true
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcBoundedCurve"
+          ]
+        }
+      ]
+    },
+    "IfcIndexedPolygonalFace": {
+      "type": "entity",
+      "name": "IfcIndexedPolygonalFace",
+      "properties": [
+        {
+          "identifier": "CoordIndex",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcPositiveInteger"
+          },
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUPERTYPE_OF_ONEOF",
+          "list_id": [
+            "IfcIndexedPolygonalFaceWithVoids"
+          ]
+        },
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcTessellatedItem"
+          ]
+        }
+      ]
+    },
+    "IfcIndexedPolygonalFaceWithVoids": {
+      "type": "entity",
+      "name": "IfcIndexedPolygonalFaceWithVoids",
+      "properties": [
+        {
+          "identifier": "InnerCoordIndices",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": {
+              "type": "LIST_RANGE_OF_UNIQUE",
+              "composite_type": "IfcPositiveInteger"
+            }
+          },
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcIndexedPolygonalFace"
           ]
         }
       ]
@@ -34852,7 +35298,7 @@
             "composite_type": {
               "type": "LIST_RANGE_OF",
               "range": "[",
-              "composite_type": "INTEGER"
+              "composite_type": "IfcPositiveInteger"
             }
           },
           "optional": true
@@ -34901,6 +35347,19 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcFlowTreatmentDeviceType"
+          ]
+        }
+      ]
+    },
+    "IfcIntersectionCurve": {
+      "type": "entity",
+      "name": "IfcIntersectionCurve",
+      "properties": [],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcSurfaceCurve"
           ]
         }
       ]
@@ -35891,7 +36350,7 @@
         },
         {
           "identifier": "Priority",
-          "composite_type": "IfcNormalisedRatioMeasure",
+          "composite_type": "IfcInteger",
           "optional": true
         }
       ],
@@ -36050,7 +36509,7 @@
         },
         {
           "identifier": "Priority",
-          "composite_type": "IfcNormalisedRatioMeasure",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
@@ -36444,7 +36903,7 @@
         {
           "identifier": "DataValue",
           "composite_type": "IfcMetricValueSelect",
-          "optional": false
+          "optional": true
         },
         {
           "identifier": "ReferencePath",
@@ -36687,7 +37146,7 @@
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         }
       ],
@@ -36716,7 +37175,7 @@
         },
         {
           "identifier": "SelfIntersect",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
@@ -36862,7 +37321,7 @@
         },
         {
           "identifier": "Orientation",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -37471,10 +37930,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": {
-              "type": "BINARY",
-              "size": "32"
-            }
+            "composite_type": "IfcBinary"
           },
           "optional": false
         }
@@ -37750,6 +38206,43 @@
           "abstract": "SUBTYPE_OF",
           "list_id": [
             "IfcHalfSpaceSolid"
+          ]
+        }
+      ]
+    },
+    "IfcPolygonalFaceSet": {
+      "type": "entity",
+      "name": "IfcPolygonalFaceSet",
+      "properties": [
+        {
+          "identifier": "Closed",
+          "composite_type": "IfcBoolean",
+          "optional": true
+        },
+        {
+          "identifier": "Faces",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcIndexedPolygonalFace"
+          },
+          "optional": false
+        },
+        {
+          "identifier": "PnIndex",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcPositiveInteger"
+          },
+          "optional": true
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcTessellatedFaceSet"
           ]
         }
       ]
@@ -38050,17 +38543,17 @@
       "properties": [
         {
           "identifier": "LayerOn",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "LayerFrozen",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
           "identifier": "LayerBlocked",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
@@ -39277,7 +39770,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "REAL"
+            "composite_type": "IfcReal"
           },
           "optional": false
         }
@@ -39303,7 +39796,7 @@
             "composite_type": {
               "type": "LIST_RANGE_OF",
               "range": "[",
-              "composite_type": "REAL"
+              "composite_type": "IfcReal"
             }
           },
           "optional": false
@@ -39438,12 +39931,12 @@
         },
         {
           "identifier": "Usense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Vsense",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -39539,7 +40032,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "INTEGER"
+            "composite_type": "IfcInteger"
           },
           "optional": true
         },
@@ -40368,7 +40861,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "NUMBER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -40377,7 +40870,7 @@
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": "NUMBER"
+            "composite_type": "IfcInteger"
           },
           "optional": false
         },
@@ -41471,7 +41964,7 @@
         },
         {
           "identifier": "IsOverAllocated",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -41809,6 +42302,19 @@
         }
       ]
     },
+    "IfcSeamCurve": {
+      "type": "entity",
+      "name": "IfcSeamCurve",
+      "properties": [],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcSurfaceCurve"
+          ]
+        }
+      ]
+    },
     "IfcSectionProperties": {
       "type": "entity",
       "name": "IfcSectionProperties",
@@ -42023,7 +42529,7 @@
         },
         {
           "identifier": "ProductDefinitional",
-          "composite_type": "LOGICAL",
+          "composite_type": "IfcLogical",
           "optional": false
         },
         {
@@ -42613,6 +43119,25 @@
         }
       ]
     },
+    "IfcSphericalSurface": {
+      "type": "entity",
+      "name": "IfcSphericalSurface",
+      "properties": [
+        {
+          "identifier": "Radius",
+          "composite_type": "IfcPositiveLengthMeasure",
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcElementarySurface"
+          ]
+        }
+      ]
+    },
     "IfcStackTerminal": {
       "type": "entity",
       "name": "IfcStackTerminal",
@@ -42675,13 +43200,13 @@
       "name": "IfcStairFlight",
       "properties": [
         {
-          "identifier": "NumberOfRiser",
-          "composite_type": "INTEGER",
+          "identifier": "NumberOfRisers",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
           "identifier": "NumberOfTreads",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
@@ -42753,7 +43278,7 @@
       "properties": [
         {
           "identifier": "DestabilizingLoad",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -43562,7 +44087,7 @@
         },
         {
           "identifier": "IsLinear",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -43822,6 +44347,46 @@
         }
       ]
     },
+    "IfcSurfaceCurve": {
+      "type": "entity",
+      "name": "IfcSurfaceCurve",
+      "properties": [
+        {
+          "identifier": "Curve3D",
+          "composite_type": "IfcCurve",
+          "optional": false
+        },
+        {
+          "identifier": "AssociatedGeometry",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": "IfcPcurve"
+          },
+          "optional": false
+        },
+        {
+          "identifier": "MasterRepresentation",
+          "composite_type": "IfcPreferredSurfaceCurveRepresentation",
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUPERTYPE_OF_ONEOF",
+          "list_id": [
+            "IfcIntersectionCurve",
+            "IfcSeamCurve"
+          ]
+        },
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcCurve"
+          ]
+        }
+      ]
+    },
     "IfcSurfaceCurveSweptAreaSolid": {
       "type": "entity",
       "name": "IfcSurfaceCurveSweptAreaSolid",
@@ -44045,11 +44610,6 @@
       "name": "IfcSurfaceStyleRendering",
       "properties": [
         {
-          "identifier": "Transparency",
-          "composite_type": "IfcNormalisedRatioMeasure",
-          "optional": true
-        },
-        {
           "identifier": "DiffuseColour",
           "composite_type": "IfcColourOrFactor",
           "optional": true
@@ -44102,6 +44662,11 @@
           "identifier": "SurfaceColour",
           "composite_type": "IfcColourRgb",
           "optional": false
+        },
+        {
+          "identifier": "Transparency",
+          "composite_type": "IfcNormalisedRatioMeasure",
+          "optional": true
         }
       ],
       "abstract": [
@@ -44148,12 +44713,12 @@
       "properties": [
         {
           "identifier": "RepeatS",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "RepeatT",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
@@ -44553,7 +45118,7 @@
         },
         {
           "identifier": "IsHeading",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ]
@@ -44612,12 +45177,12 @@
         },
         {
           "identifier": "IsMilestone",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Priority",
-          "composite_type": "INTEGER",
+          "composite_type": "IfcInteger",
           "optional": true
         },
         {
@@ -44696,7 +45261,7 @@
         },
         {
           "identifier": "IsCritical",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -44750,7 +45315,7 @@
       "name": "IfcTaskTimeRecurring",
       "properties": [
         {
-          "identifier": "Recurrance",
+          "identifier": "Recurrence",
           "composite_type": "IfcRecurrencePattern",
           "optional": false
         }
@@ -44960,7 +45525,7 @@
           "optional": true
         },
         {
-          "identifier": "SheethDiameter",
+          "identifier": "SheathDiameter",
           "composite_type": "IfcPositiveLengthMeasure",
           "optional": true
         }
@@ -44982,30 +45547,13 @@
           "identifier": "Coordinates",
           "composite_type": "IfcCartesianPointList3D",
           "optional": false
-        },
-        {
-          "identifier": "Normals",
-          "composite_type": {
-            "type": "LIST_RANGE_OF",
-            "range": "[",
-            "composite_type": {
-              "type": "LIST_RANGE_OF",
-              "range": "[",
-              "composite_type": "IfcParameterValue"
-            }
-          },
-          "optional": true
-        },
-        {
-          "identifier": "Closed",
-          "composite_type": "BOOLEAN",
-          "optional": true
         }
       ],
       "abstract": [
         {
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
+            "IfcPolygonalFaceSet",
             "IfcTriangulatedFaceSet"
           ]
         },
@@ -45025,6 +45573,7 @@
         {
           "abstract": "ABSTRACT_SUPERTYPE_OF_ONEOF",
           "list_id": [
+            "IfcIndexedPolygonalFace",
             "IfcTessellatedFaceSet"
           ]
         },
@@ -45116,7 +45665,7 @@
         },
         {
           "identifier": "ModelOrDraughting",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         }
       ],
@@ -45506,6 +46055,30 @@
         }
       ]
     },
+    "IfcToroidalSurface": {
+      "type": "entity",
+      "name": "IfcToroidalSurface",
+      "properties": [
+        {
+          "identifier": "MajorRadius",
+          "composite_type": "IfcPositiveLengthMeasure",
+          "optional": false
+        },
+        {
+          "identifier": "MinorRadius",
+          "composite_type": "IfcPositiveLengthMeasure",
+          "optional": false
+        }
+      ],
+      "abstract": [
+        {
+          "abstract": "SUBTYPE_OF",
+          "list_id": [
+            "IfcElementarySurface"
+          ]
+        }
+      ]
+    },
     "IfcTransformer": {
       "type": "entity",
       "name": "IfcTransformer",
@@ -45621,6 +46194,24 @@
       "name": "IfcTriangulatedFaceSet",
       "properties": [
         {
+          "identifier": "Normals",
+          "composite_type": {
+            "type": "LIST_RANGE_OF",
+            "range": "[",
+            "composite_type": {
+              "type": "LIST_RANGE_OF",
+              "range": "[",
+              "composite_type": "IfcParameterValue"
+            }
+          },
+          "optional": true
+        },
+        {
+          "identifier": "Closed",
+          "composite_type": "IfcBoolean",
+          "optional": true
+        },
+        {
           "identifier": "CoordIndex",
           "composite_type": {
             "type": "LIST_RANGE_OF",
@@ -45628,21 +46219,17 @@
             "composite_type": {
               "type": "LIST_RANGE_OF",
               "range": "[",
-              "composite_type": "INTEGER"
+              "composite_type": "IfcPositiveInteger"
             }
           },
           "optional": false
         },
         {
-          "identifier": "NormalIndex",
+          "identifier": "PnIndex",
           "composite_type": {
             "type": "LIST_RANGE_OF",
             "range": "[",
-            "composite_type": {
-              "type": "LIST_RANGE_OF",
-              "range": "[",
-              "composite_type": "INTEGER"
-            }
+            "composite_type": "IfcPositiveInteger"
           },
           "optional": true
         }
@@ -45683,7 +46270,7 @@
         },
         {
           "identifier": "SenseAgreement",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
@@ -46529,12 +47116,12 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         },
         {
           "identifier": "Sizeable",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": false
         }
       ],
@@ -46563,7 +47150,7 @@
         },
         {
           "identifier": "ParameterTakesPrecedence",
-          "composite_type": "BOOLEAN",
+          "composite_type": "IfcBoolean",
           "optional": true
         },
         {
@@ -46807,6 +47394,11 @@
     }
   },
   "_types": {
+    "IfcStrippedOptional": {
+      "type": "type",
+      "name": "IfcStrippedOptional",
+      "type_type": "BOOLEAN"
+    },
     "IfcAbsorbedDoseMeasure": {
       "type": "type",
       "name": "IfcAbsorbedDoseMeasure",
@@ -46836,6 +47428,11 @@
       "type": "type",
       "name": "IfcAreaMeasure",
       "type_type": "REAL"
+    },
+    "IfcBinary": {
+      "type": "type",
+      "name": "IfcBinary",
+      "type_type": "BINARY"
     },
     "IfcBoolean": {
       "type": "type",
@@ -47192,6 +47789,11 @@
       "name": "IfcPlaneAngleMeasure",
       "type_type": "REAL"
     },
+    "IfcPositiveInteger": {
+      "type": "type",
+      "name": "IfcPositiveInteger",
+      "type_type": "IfcInteger"
+    },
     "IfcPositiveLengthMeasure": {
       "type": "type",
       "name": "IfcPositiveLengthMeasure",
@@ -47465,7 +48067,8 @@
         "IfcBooleanResult",
         "IfcCsgPrimitive3D",
         "IfcHalfSpaceSolid",
-        "IfcSolidModel"
+        "IfcSolidModel",
+        "IfcTessellatedFaceSet"
       ]
     },
     "IfcClassificationReferenceSelect": {
@@ -47529,7 +48132,8 @@
       "name": "IfcCurveOnSurface",
       "list": [
         "IfcCompositeCurveOnSurface",
-        "IfcPcurve"
+        "IfcPcurve",
+        "IfcSurfaceCurve"
       ]
     },
     "IfcCurveOrEdgeCurve": {
@@ -47878,6 +48482,14 @@
         "IfcRotationalStiffnessMeasure"
       ]
     },
+    "IfcSegmentIndexSelect": {
+      "type": "select",
+      "name": "IfcSegmentIndexSelect",
+      "list": [
+        "IfcArcIndex",
+        "IfcLineIndex"
+      ]
+    },
     "IfcShell": {
       "type": "select",
       "name": "IfcShell",
@@ -47890,6 +48502,7 @@
       "type": "select",
       "name": "IfcSimpleValue",
       "list": [
+        "IfcBinary",
         "IfcBoolean",
         "IfcDate",
         "IfcDateTime",
@@ -47898,6 +48511,7 @@
         "IfcInteger",
         "IfcLabel",
         "IfcLogical",
+        "IfcPositiveInteger",
         "IfcReal",
         "IfcText",
         "IfcTime",

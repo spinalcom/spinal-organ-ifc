@@ -22,6 +22,10 @@ function readAndPrepare(_file) {
   ) {
     return String.fromCharCode(parseInt(match, 16));
   });
+
+  jsonString = jsonString.replace(/#([0-9]*)/g, "_res[$1]");
+
+
   //change () tables into [] tables
   jsonString = jsonString.replace(/\(/g, "[");
   jsonString = jsonString.replace(/\)/g, "]");
@@ -38,26 +42,17 @@ function readAndPrepare(_file) {
   jsonString = jsonString.replace(/([,(])?(\$)([,)])/g, "$1'$$'$3");
 
   jsonString = jsonString.replace(/([,(])?(\*)([,)])/g, "$1'*'$3");
-  jsonString = jsonString.replace(/#([0-9]*)/g, "_res[$1]");
+
   jsonString = jsonString.replace(/(\.[a-zA-Z_0-9]*\.)([,)])/g, "'$1'$2");
   jsonString = jsonString.replace(
     /([,[(])([A-Z]+\([^)]*\))/g,
     "$1new TYPES.$2"
   );
 
+  // (new ENTITIES.IFCPROPERTYSINGLEVALUE('Retournement aux extrémités','$',new TYPES.IFCIDENTIFIER('Aucun[e)'],'$'))
   //(new ENTITIES.IFCPROPERTYSINGLEVALUE('Classification du système','$',new TYPES.IFCTEXT('Puissance,Retour hydraulique,Eau froide sanitaire,Alimentation hydraulique,Eau chaude sanitaire,Autre,Sanitaire,Donnée'],'$'))
   // jsonString = jsonString.replace(/(TYPES.[A-Z]*?[^\]\n]*?)\]/g, "$1)");
   jsonString = jsonString.replace(/(,[^[]ew TYPES.[A-Z]*\('[^']*')\]/g, "$1)");
-
-  // (new ENTITIES.IFCPROPERTYSINGLEVALUE('Retournement aux extrémités','$',new TYPES.IFCIDENTIFIER('Aucun[e)'],'$'))
-  // jsonString = jsonString.replace(
-  //   /(TYPES.[A-Z]*?\([^[\n]*?)\[([^\]\n]*?)\]/g,
-  //   "$1($2)"
-  // );
-
-  // (TYPES.[A-Z]*\([^[]*)\[([^\]]*)\] $1($2)
-
-  //(TYPES.[A-Z]*[^\]]*)\]  $1)
 
   jsonString = jsonString.replace(/\\/g, "\\\\");
 
@@ -73,36 +68,22 @@ function readAndPrepare(_file) {
   return jsonString;
 }
 
-function popById(_array, _id, _reverseObj) {
-  let element = _reverseObj[_id];
-  _array.splice(_array.indexOf(element), 1);
+function getById(_id, _objs) {
+  let element = _objs[_id];
   return element;
 }
 
-function getById(_id, _reverseObj) {
-  let element = _reverseObj[_id];
-  return element;
-}
-
-function createObject(
-  _element,
-  _array,
-  _res,
-  _reverseObj,
-  _version,
-  _initialLength,
-  _bar,
-  _count,
-  _streamer
-) {
+function createObject(_element, _array, _objs, _res, _params) {
   if (typeof _res[_element._id] === "undefined") {
-    const ENTITIES = require("../../ifc_models/" + _version + "_entities");
-    const TYPES = require("../../ifc_models/" + _version + "_types");
+    const ENTITIES = require("../../ifc_models/" +
+      _params.version +
+      "_entities");
+    const TYPES = require("../../ifc_models/" + _params.version + "_types");
     ENTITIES;
     TYPES;
     let id = _element._id;
-    let dependsOn = [];
 
+    let dependsOn = [];
     let myRegexp = /res\[([0-9]+)\]/g;
     let match = myRegexp.exec(_element.line);
     while (match != null) {
@@ -112,75 +93,66 @@ function createObject(
 
     for (let i = 0; i < dependsOn.length; i++) {
       const dOid = dependsOn[i];
-
       if (typeof _res[dOid] === "undefined") {
-        let element = getById(dOid, _reverseObj);
-        createObject(
-          element,
-          _array,
-          _res,
-          _reverseObj,
-          _version,
-          _initialLength,
-          _bar,
-          _count,
-          _streamer
-        );
+        let element = getById(dOid, _objs);
+        createObject(element, _array, _objs, _res, _params);
       }
     }
-    let objectData = null;
-    let s = `objectData =  (new ENTITIES.${_element.type}${_element.line})`;
+
+    // let objectData = null;
+    let s = `_res[${id}] =  new ENTITIES.${_element.type}${_element.line};`;
+    let addifcId = `_res[${id}].add_attr({ifcId: ${id}});`;
     try {
-      _count.c++;
+      _params.counter++;
+      _params.objectStreamer.write(s + "\n" + addifcId + "\n");
       eval(s);
-      objectData.add_attr({
+      _res[id].add_attr({
         ifcId: id
       });
     } catch (e) {
-      _streamer.write(id + " :  " + s + "\n" + e + "\n");
+      _params.errorStreamer.write(id + " :  " + s + "\n" + e + "\n");
     }
-    _res[id] = objectData;
+    // _res[id] = objectData;
     try {
-      _bar.update(_count.c);
-    } catch (e) {}
+      _params.progressBar.update(_params.counter);
+    } catch (e) {
+      _params.errorStreamer.write(e + "\n");
+    }
   }
 }
 
 function createObjects(_jsonString, _version) {
-  const bar = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic);
-  var count = {};
-  count.c = 0;
-  var streamer = fs.createWriteStream("errors.txt");
   let obj = JSON.parse(_jsonString);
   let array = Object.values(obj.input._readableState.pipes.lines);
   let res = {};
-  let initialLength = array.length;
-  bar.start(initialLength, 0);
+  var params = {
+    counter: 0,
+    errorStreamer: fs.createWriteStream("errors.txt"),
+    progressBar: new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic),
+    objectStreamer: fs.createWriteStream("objects.js"),
+    initialLength: array.length,
+    version: _version
+  };
+  params.progressBar.start(params.initialLength, 0);
+  params.objectStreamer.write(
+    `const ENTITIES = require("../../ifc_models/${params.version}_entities");
+    const TYPES = require("../../ifc_models/+${params.version}_types");
+    let _res = {};
+    `
+  );
 
-  let reverse = array;
-  let reverseObj = {};
-  for (let index = 0; index < reverse.length; index++) {
-    let element = reverse[index];
-    reverseObj[element._id] = element;
+  let objs = {};
+  for (let index = 0; index < array.length; index++) {
+    let element = array[index];
+    objs[element._id] = element;
   }
 
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
-
-    createObject(
-      element,
-      reverse,
-      res,
-      reverseObj,
-      _version,
-      initialLength,
-      bar,
-      count,
-      streamer
-    );
+    createObject(element, array, objs, res, params);
   }
-  bar.stop();
-  console.log(count.c + "/" + initialLength);
+  params.progressBar.stop();
+  console.log(params.counter + "/" + params.initialLength);
   return res;
 }
 
@@ -242,12 +214,12 @@ function createAggregateRelations(_objectsArray) {
 
 function toLst(_objects) {
   let res = new globalType.Lst();
-  let count = 0;
+  // let count = 0;
   for (const key in _objects) {
     if (_objects.hasOwnProperty(key)) {
-      if (count === 40) return res;
+      // if (count === 40) return res;
       res.push(_objects[key]);
-      count++;
+      // count++;
     }
   }
   return res;
@@ -284,9 +256,7 @@ function relAggregate(_listPerClass) {
   let res = new globalType.Lst();
   if (_listPerClass.IFCRELAGGREGATES)
     for (
-      let index = 0;
-      index < _listPerClass.IFCRELAGGREGATES.length;
-      index++
+      let index = 0; index < _listPerClass.IFCRELAGGREGATES.length; index++
     ) {
       const element = _listPerClass.IFCRELAGGREGATES[index];
       res.push(element);
@@ -298,9 +268,7 @@ function relContained(_listPerClass) {
   let res = new globalType.Lst();
   if (_listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE)
     for (
-      let index = 0;
-      index < _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE.length;
-      index++
+      let index = 0; index < _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE.length; index++
     ) {
       const element = _listPerClass.IFCRELCONTAINEDINSPATIALSTRUCTURE[index];
       res.push(element);

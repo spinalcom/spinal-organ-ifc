@@ -11,6 +11,16 @@ const spinalCore = require("spinal-core-connectorjs");
   }
   exports.IFC = IFC;
   
+     class IFCSTRIPPEDOPTIONAL extends IFC {
+        constructor(_param) {
+                super();
+                this.add_attr({
+value: _param || true
+});
+                }
+    }
+    exports.IFCSTRIPPEDOPTIONAL = IFCSTRIPPEDOPTIONAL;
+  
      class IFCABSORBEDDOSEMEASURE extends IFC {
         constructor(_param) {
                 super();
@@ -70,6 +80,16 @@ value: _param || 0
                 }
     }
     exports.IFCAREAMEASURE = IFCAREAMEASURE;
+  
+     class IFCBINARY extends IFC {
+        constructor(_param) {
+                super();
+                this.add_attr({
+value: _param || 0
+});
+                }
+    }
+    exports.IFCBINARY = IFCBINARY;
   
      class IFCBOOLEAN extends IFC {
         constructor(_param) {
@@ -780,6 +800,16 @@ value: _param || 0
                 }
     }
     exports.IFCPLANEANGLEMEASURE = IFCPLANEANGLEMEASURE;
+  
+     class IFCPOSITIVEINTEGER extends IFC {
+        constructor(_param) {
+                super();
+                this.add_attr({
+value: new IFCINTEGER(_param)
+});
+                }
+    }
+    exports.IFCPOSITIVEINTEGER = IFCPOSITIVEINTEGER;
   
      class IFCPOSITIVELENGTHMEASURE extends IFC {
         constructor(_param) {

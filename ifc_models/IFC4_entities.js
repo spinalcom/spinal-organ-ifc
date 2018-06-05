@@ -576,7 +576,7 @@ UserDefinedDataOrigin: _UserDefinedDataOrigin //IfcLabel
 ShapeRepresentations: _ShapeRepresentations, //[object Object]
 Name: _Name, //IfcLabel
 Description: _Description, //IfcText
-ProductDefinitional: _ProductDefinitional, //LOGICAL
+ProductDefinitional: _ProductDefinitional, //IfcLogical
 PartOfProductDefinitionShape: _PartOfProductDefinitionShape //IfcProductRepresentationSelect
 });
                   }
@@ -634,7 +634,7 @@ ReferencePath: _ReferencePath //IfcReference
                   super();
                   this.add_attr({
 RowCells: _RowCells, //[object Object]
-IsHeading: _IsHeading //BOOLEAN
+IsHeading: _IsHeading //IfcBoolean
 });
                   }
       }
@@ -1003,7 +1003,7 @@ IsVentilated: _IsVentilated, //IfcLogical
 Name: _Name, //IfcLabel
 Description: _Description, //IfcText
 Category: _Category, //IfcLabel
-Priority: _Priority //IfcNormalisedRatioMeasure
+Priority: _Priority //IfcInteger
 });
                   }
       }
@@ -1029,7 +1029,7 @@ Name: _Name, //IfcLabel
 Description: _Description, //IfcText
 Material: _Material, //IfcMaterial
 Profile: _Profile, //IfcProfileDef
-Priority: _Priority, //IfcNormalisedRatioMeasure
+Priority: _Priority, //IfcInteger
 Category: _Category //IfcLabel
 });
                   }
@@ -1215,10 +1215,11 @@ DispersionFactor: _DispersionFactor //IfcReal
       exports.IFCSURFACESTYLEREFRACTION = IFCSURFACESTYLEREFRACTION;
     
        class IFCSURFACESTYLESHADING extends IFCPRESENTATIONITEM {
-          constructor(_SurfaceColour) {
+          constructor(_SurfaceColour, _Transparency) {
                   super();
                   this.add_attr({
-SurfaceColour: _SurfaceColour //IfcColourRgb
+SurfaceColour: _SurfaceColour, //IfcColourRgb
+Transparency: _Transparency //IfcNormalisedRatioMeasure
 });
                   }
       }
@@ -1238,8 +1239,8 @@ Textures: _Textures //[object Object]
           constructor(_RepeatS, _RepeatT, _Mode, _TextureTransform, _Parameter) {
                   super();
                   this.add_attr({
-RepeatS: _RepeatS, //BOOLEAN
-RepeatT: _RepeatT, //BOOLEAN
+RepeatS: _RepeatS, //IfcBoolean
+RepeatT: _RepeatT, //IfcBoolean
 Mode: _Mode, //IfcIdentifier
 TextureTransform: _TextureTransform, //IfcCartesianTransformationOperator2D
 Parameter: _Parameter //[object Object]
@@ -1360,11 +1361,11 @@ InvisibleSegmentLength: _InvisibleSegmentLength //IfcPositiveLengthMeasure
       exports.IFCCURVESTYLEFONTPATTERN = IFCCURVESTYLEFONTPATTERN;
     
        class IFCINDEXEDCOLOURMAP extends IFCPRESENTATIONITEM {
-          constructor(_MappedTo, _Overrides, _Colours, _ColourIndex) {
+          constructor(_MappedTo, _Opacity, _Colours, _ColourIndex) {
                   super();
                   this.add_attr({
 MappedTo: _MappedTo, //IfcTessellatedFaceSet
-Overrides: _Overrides, //IfcSurfaceStyleShading
+Opacity: _Opacity, //IfcNormalisedRatioMeasure
 Colours: _Colours, //IfcColourRgbList
 ColourIndex: _ColourIndex //[object Object]
 });
@@ -1386,9 +1387,9 @@ Name: _Name //IfcLabel
           constructor(_Name, _Description, _AssignedItems, _Identifier, _LayerOn, _LayerFrozen, _LayerBlocked, _LayerStyles) {
                   super(_Name, _Description, _AssignedItems, _Identifier);
                   this.add_attr({
-LayerOn: _LayerOn, //LOGICAL
-LayerFrozen: _LayerFrozen, //LOGICAL
-LayerBlocked: _LayerBlocked, //LOGICAL
+LayerOn: _LayerOn, //IfcLogical
+LayerFrozen: _LayerFrozen, //IfcLogical
+LayerBlocked: _LayerBlocked, //IfcLogical
 LayerStyles: _LayerStyles //[object Object]
 });
                   }
@@ -1413,7 +1414,7 @@ Styles: _Styles //[object Object]
 TextCharacterAppearance: _TextCharacterAppearance, //IfcTextStyleForDefinedFont
 TextStyle: _TextStyle, //IfcTextStyleTextModel
 TextFontStyle: _TextFontStyle, //IfcTextFontSelect
-ModelOrDraughting: _ModelOrDraughting //BOOLEAN
+ModelOrDraughting: _ModelOrDraughting //IfcBoolean
 });
                   }
       }
@@ -1426,7 +1427,7 @@ ModelOrDraughting: _ModelOrDraughting //BOOLEAN
 CurveFont: _CurveFont, //IfcCurveFontOrScaledCurveFontSelect
 CurveWidth: _CurveWidth, //IfcSizeSelect
 CurveColour: _CurveColour, //IfcColour
-ModelOrDraughting: _ModelOrDraughting //BOOLEAN
+ModelOrDraughting: _ModelOrDraughting //IfcBoolean
 });
                   }
       }
@@ -1437,7 +1438,7 @@ ModelOrDraughting: _ModelOrDraughting //BOOLEAN
                   super(_Name);
                   this.add_attr({
 FillStyles: _FillStyles, //[object Object]
-ModelorDraughting: _ModelorDraughting //BOOLEAN
+ModelorDraughting: _ModelorDraughting //IfcBoolean
 });
                   }
       }
@@ -1578,7 +1579,7 @@ Description: _Description //IfcText
                   super(_ContextIdentifier, _ContextType);
                   this.add_attr({
 CoordinateSpaceDimension: _CoordinateSpaceDimension, //IfcDimensionCount
-Precision: _Precision, //REAL
+Precision: _Precision, //IfcReal
 WorldCoordinateSystem: _WorldCoordinateSystem, //IfcAxis2Placement
 TrueNorth: _TrueNorth //IfcDirection
 });
@@ -1768,7 +1769,7 @@ LateStart: _LateStart, //IfcDateTime
 LateFinish: _LateFinish, //IfcDateTime
 FreeFloat: _FreeFloat, //IfcDuration
 TotalFloat: _TotalFloat, //IfcDuration
-IsCritical: _IsCritical, //BOOLEAN
+IsCritical: _IsCritical, //IfcBoolean
 StatusTime: _StatusTime, //IfcDateTime
 ActualDuration: _ActualDuration, //IfcDuration
 ActualStart: _ActualStart, //IfcDateTime
@@ -1826,7 +1827,7 @@ ScheduleStart: _ScheduleStart, //IfcDateTime
 ScheduleFinish: _ScheduleFinish, //IfcDateTime
 ScheduleContour: _ScheduleContour, //IfcLabel
 LevelingDelay: _LevelingDelay, //IfcDuration
-IsOverAllocated: _IsOverAllocated, //BOOLEAN
+IsOverAllocated: _IsOverAllocated, //IfcBoolean
 StatusTime: _StatusTime, //IfcDateTime
 ActualWork: _ActualWork, //IfcDuration
 ActualUsage: _ActualUsage, //IfcPositiveRatioMeasure
@@ -2039,9 +2040,8 @@ Formula: _Formula //IfcLabel
     
        class IFCSURFACESTYLERENDERING extends IFCSURFACESTYLESHADING {
           constructor(_SurfaceColour, _Transparency, _DiffuseColour, _TransmissionColour, _DiffuseTransmissionColour, _ReflectionColour, _SpecularColour, _SpecularHighlight, _ReflectanceMethod) {
-                  super(_SurfaceColour);
+                  super(_SurfaceColour, _Transparency);
                   this.add_attr({
-Transparency: _Transparency, //IfcNormalisedRatioMeasure
 DiffuseColour: _DiffuseColour, //IfcColourOrFactor
 TransmissionColour: _TransmissionColour, //IfcColourOrFactor
 DiffuseTransmissionColour: _DiffuseTransmissionColour, //IfcColourOrFactor
@@ -2059,7 +2059,7 @@ ReflectanceMethod: _ReflectanceMethod //IfcReflectanceMethodEnum
                   super(_RepeatS, _RepeatT, _Mode, _TextureTransform, _Parameter);
                   this.add_attr({
 RasterFormat: _RasterFormat, //IfcIdentifier
-RasterCode: _RasterCode //BINARY
+RasterCode: _RasterCode //IfcBinary
 });
                   }
       }
@@ -2507,7 +2507,7 @@ Bounds: _Bounds //[object Object]
                   super();
                   this.add_attr({
 Bound: _Bound, //IfcLoop
-Orientation: _Orientation //BOOLEAN
+Orientation: _Orientation //IfcBoolean
 });
                   }
       }
@@ -2546,7 +2546,7 @@ Elements: _Elements //[object Object]
                   super();
                   this.add_attr({
 BaseSurface: _BaseSurface, //IfcSurface
-AgreementFlag: _AgreementFlag //BOOLEAN
+AgreementFlag: _AgreementFlag //IfcBoolean
 });
                   }
       }
@@ -2714,7 +2714,7 @@ ZDim: _ZDim //IfcPositiveLengthMeasure
 Axis1: _Axis1, //IfcDirection
 Axis2: _Axis2, //IfcDirection
 LocalOrigin: _LocalOrigin, //IfcCartesianPoint
-Scale: _Scale //REAL
+Scale: _Scale //IfcReal
 });
                   }
       }
@@ -2725,7 +2725,7 @@ Scale: _Scale //REAL
                   super();
                   this.add_attr({
 Transition: _Transition, //IfcTransitionCode
-SameSense: _SameSense, //BOOLEAN
+SameSense: _SameSense, //IfcBoolean
 ParentCurve: _ParentCurve //IfcCurve
 });
                   }
@@ -2904,10 +2904,10 @@ RelatedDefinitions: _RelatedDefinitions //[object Object]
       exports.IFCRELDEFINES = IFCRELDEFINES;
     
        class IFCTASKTIMERECURRING extends IFCTASKTIME {
-          constructor(_Name, _DataOrigin, _UserDefinedDataOrigin, _DurationType, _ScheduleDuration, _ScheduleStart, _ScheduleFinish, _EarlyStart, _EarlyFinish, _LateStart, _LateFinish, _FreeFloat, _TotalFloat, _IsCritical, _StatusTime, _ActualDuration, _ActualStart, _ActualFinish, _RemainingTime, _Completion, _Recurrance) {
+          constructor(_Name, _DataOrigin, _UserDefinedDataOrigin, _DurationType, _ScheduleDuration, _ScheduleStart, _ScheduleFinish, _EarlyStart, _EarlyFinish, _LateStart, _LateFinish, _FreeFloat, _TotalFloat, _IsCritical, _StatusTime, _ActualDuration, _ActualStart, _ActualFinish, _RemainingTime, _Completion, _Recurrence) {
                   super(_Name, _DataOrigin, _UserDefinedDataOrigin, _DurationType, _ScheduleDuration, _ScheduleStart, _ScheduleFinish, _EarlyStart, _EarlyFinish, _LateStart, _LateFinish, _FreeFloat, _TotalFloat, _IsCritical, _StatusTime, _ActualDuration, _ActualStart, _ActualFinish, _RemainingTime, _Completion);
                   this.add_attr({
-Recurrance: _Recurrance //IfcRecurrencePattern
+Recurrence: _Recurrence //IfcRecurrencePattern
 });
                   }
       }
@@ -3108,7 +3108,7 @@ VertexGeometry: _VertexGeometry //IfcPoint
                   super(_EdgeStart, _EdgeEnd);
                   this.add_attr({
 EdgeGeometry: _EdgeGeometry, //IfcCurve
-SameSense: _SameSense //BOOLEAN
+SameSense: _SameSense //IfcBoolean
 });
                   }
       }
@@ -3119,7 +3119,7 @@ SameSense: _SameSense //BOOLEAN
                   super(_EdgeStart, _EdgeEnd);
                   this.add_attr({
 EdgeElement: _EdgeElement, //IfcEdge
-Orientation: _Orientation //BOOLEAN
+Orientation: _Orientation //IfcBoolean
 });
                   }
       }
@@ -3140,7 +3140,7 @@ ParentEdge: _ParentEdge //IfcEdge
                   super(_Bounds);
                   this.add_attr({
 FaceSurface: _FaceSurface, //IfcSurface
-SameSense: _SameSense //BOOLEAN
+SameSense: _SameSense //IfcBoolean
 });
                   }
       }
@@ -3408,13 +3408,21 @@ Position: _Position //IfcAxis2Placement3D
       }
       exports.IFCELEMENTARYSURFACE = IFCELEMENTARYSURFACE;
     
-       class IFCTESSELLATEDFACESET extends IFCTESSELLATEDITEM {
-          constructor(_Coordinates, _Normals, _Closed) {
+       class IFCINDEXEDPOLYGONALFACE extends IFCTESSELLATEDITEM {
+          constructor(_CoordIndex) {
                   super();
                   this.add_attr({
-Coordinates: _Coordinates, //IfcCartesianPointList3D
-Normals: _Normals, //[object Object]
-Closed: _Closed //BOOLEAN
+CoordIndex: _CoordIndex //[object Object]
+});
+                  }
+      }
+      exports.IFCINDEXEDPOLYGONALFACE = IFCINDEXEDPOLYGONALFACE;
+    
+       class IFCTESSELLATEDFACESET extends IFCTESSELLATEDITEM {
+          constructor(_Coordinates) {
+                  super();
+                  this.add_attr({
+Coordinates: _Coordinates //IfcCartesianPointList3D
 });
                   }
       }
@@ -3438,6 +3446,16 @@ BoxAlignment: _BoxAlignment //IfcBoxAlignment
                   }
       }
       exports.IFCBOOLEANCLIPPINGRESULT = IFCBOOLEANCLIPPINGRESULT;
+    
+       class IFCCARTESIANPOINTLIST2D extends IFCCARTESIANPOINTLIST {
+          constructor(_CoordList) {
+                  super();
+                  this.add_attr({
+CoordList: _CoordList //[object Object]
+});
+                  }
+      }
+      exports.IFCCARTESIANPOINTLIST2D = IFCCARTESIANPOINTLIST2D;
     
        class IFCCARTESIANPOINTLIST3D extends IFCCARTESIANPOINTLIST {
           constructor(_CoordList) {
@@ -3550,7 +3568,7 @@ Dir: _Dir //IfcVector
                   this.add_attr({
 BasisCurve: _BasisCurve, //IfcCurve
 Distance: _Distance, //IfcLengthMeasure
-SelfIntersect: _SelfIntersect //LOGICAL
+SelfIntersect: _SelfIntersect //IfcLogical
 });
                   }
       }
@@ -3562,7 +3580,7 @@ SelfIntersect: _SelfIntersect //LOGICAL
                   this.add_attr({
 BasisCurve: _BasisCurve, //IfcCurve
 Distance: _Distance, //IfcLengthMeasure
-SelfIntersect: _SelfIntersect, //LOGICAL
+SelfIntersect: _SelfIntersect, //IfcLogical
 RefDirection: _RefDirection //IfcDirection
 });
                   }
@@ -3579,6 +3597,18 @@ ReferenceCurve: _ReferenceCurve //IfcCurve
                   }
       }
       exports.IFCPCURVE = IFCPCURVE;
+    
+       class IFCSURFACECURVE extends IFCCURVE {
+          constructor(_Curve3D, _AssociatedGeometry, _MasterRepresentation) {
+                  super();
+                  this.add_attr({
+Curve3D: _Curve3D, //IfcCurve
+AssociatedGeometry: _AssociatedGeometry, //[object Object]
+MasterRepresentation: _MasterRepresentation //IfcPreferredSurfaceCurveRepresentation
+});
+                  }
+      }
+      exports.IFCSURFACECURVE = IFCSURFACECURVE;
     
        class IFCBOUNDEDCURVE extends IFCCURVE {
           constructor() {
@@ -4350,7 +4380,7 @@ InnerBoundaries: _InnerBoundaries //[object Object]
                   this.add_attr({
 BasisSurface: _BasisSurface, //IfcSurface
 Boundaries: _Boundaries, //[object Object]
-ImplicitOuter: _ImplicitOuter //BOOLEAN
+ImplicitOuter: _ImplicitOuter //IfcBoolean
 });
                   }
       }
@@ -4365,8 +4395,8 @@ U1: _U1, //IfcParameterValue
 V1: _V1, //IfcParameterValue
 U2: _U2, //IfcParameterValue
 V2: _V2, //IfcParameterValue
-Usense: _Usense, //BOOLEAN
-Vsense: _Vsense //BOOLEAN
+Usense: _Usense, //IfcBoolean
+Vsense: _Vsense //IfcBoolean
 });
                   }
       }
@@ -4376,13 +4406,13 @@ Vsense: _Vsense //BOOLEAN
           constructor(_UDegree, _VDegree, _ControlPointsList, _SurfaceForm, _UClosed, _VClosed, _SelfIntersect) {
                   super();
                   this.add_attr({
-UDegree: _UDegree, //INTEGER
-VDegree: _VDegree, //INTEGER
+UDegree: _UDegree, //IfcInteger
+VDegree: _VDegree, //IfcInteger
 ControlPointsList: _ControlPointsList, //[object Object]
 SurfaceForm: _SurfaceForm, //IfcBSplineSurfaceForm
-UClosed: _UClosed, //LOGICAL
-VClosed: _VClosed, //LOGICAL
-SelfIntersect: _SelfIntersect //LOGICAL
+UClosed: _UClosed, //IfcLogical
+VClosed: _VClosed, //IfcLogical
+SelfIntersect: _SelfIntersect //IfcLogical
 });
                   }
       }
@@ -4396,6 +4426,27 @@ SelfIntersect: _SelfIntersect //LOGICAL
       }
       exports.IFCPLANE = IFCPLANE;
     
+       class IFCSPHERICALSURFACE extends IFCELEMENTARYSURFACE {
+          constructor(_Position, _Radius) {
+                  super(_Position);
+                  this.add_attr({
+Radius: _Radius //IfcPositiveLengthMeasure
+});
+                  }
+      }
+      exports.IFCSPHERICALSURFACE = IFCSPHERICALSURFACE;
+    
+       class IFCTOROIDALSURFACE extends IFCELEMENTARYSURFACE {
+          constructor(_Position, _MajorRadius, _MinorRadius) {
+                  super(_Position);
+                  this.add_attr({
+MajorRadius: _MajorRadius, //IfcPositiveLengthMeasure
+MinorRadius: _MinorRadius //IfcPositiveLengthMeasure
+});
+                  }
+      }
+      exports.IFCTOROIDALSURFACE = IFCTOROIDALSURFACE;
+    
        class IFCCYLINDRICALSURFACE extends IFCELEMENTARYSURFACE {
           constructor(_Position, _Radius) {
                   super(_Position);
@@ -4406,22 +4457,46 @@ Radius: _Radius //IfcPositiveLengthMeasure
       }
       exports.IFCCYLINDRICALSURFACE = IFCCYLINDRICALSURFACE;
     
-       class IFCTRIANGULATEDFACESET extends IFCTESSELLATEDFACESET {
-          constructor(_Coordinates, _Normals, _Closed, _CoordIndex, _NormalIndex) {
-                  super(_Coordinates, _Normals, _Closed);
+       class IFCINDEXEDPOLYGONALFACEWITHVOIDS extends IFCINDEXEDPOLYGONALFACE {
+          constructor(_CoordIndex, _InnerCoordIndices) {
+                  super(_CoordIndex);
                   this.add_attr({
+InnerCoordIndices: _InnerCoordIndices //[object Object]
+});
+                  }
+      }
+      exports.IFCINDEXEDPOLYGONALFACEWITHVOIDS = IFCINDEXEDPOLYGONALFACEWITHVOIDS;
+    
+       class IFCTRIANGULATEDFACESET extends IFCTESSELLATEDFACESET {
+          constructor(_Coordinates, _Normals, _Closed, _CoordIndex, _PnIndex) {
+                  super(_Coordinates);
+                  this.add_attr({
+Normals: _Normals, //[object Object]
+Closed: _Closed, //IfcBoolean
 CoordIndex: _CoordIndex, //[object Object]
-NormalIndex: _NormalIndex //[object Object]
+PnIndex: _PnIndex //[object Object]
 });
                   }
       }
       exports.IFCTRIANGULATEDFACESET = IFCTRIANGULATEDFACESET;
     
+       class IFCPOLYGONALFACESET extends IFCTESSELLATEDFACESET {
+          constructor(_Coordinates, _Closed, _Faces, _PnIndex) {
+                  super(_Coordinates);
+                  this.add_attr({
+Closed: _Closed, //IfcBoolean
+Faces: _Faces, //[object Object]
+PnIndex: _PnIndex //[object Object]
+});
+                  }
+      }
+      exports.IFCPOLYGONALFACESET = IFCPOLYGONALFACESET;
+    
        class IFCCARTESIANTRANSFORMATIONOPERATOR2DNONUNIFORM extends IFCCARTESIANTRANSFORMATIONOPERATOR2D {
           constructor(_Axis1, _Axis2, _LocalOrigin, _Scale, _Scale2) {
                   super(_Axis1, _Axis2, _LocalOrigin, _Scale);
                   this.add_attr({
-Scale2: _Scale2 //REAL
+Scale2: _Scale2 //IfcReal
 });
                   }
       }
@@ -4431,23 +4506,51 @@ Scale2: _Scale2 //REAL
           constructor(_Axis1, _Axis2, _LocalOrigin, _Scale, _Axis3, _Scale2, _Scale3) {
                   super(_Axis1, _Axis2, _LocalOrigin, _Scale, _Axis3);
                   this.add_attr({
-Scale2: _Scale2, //REAL
-Scale3: _Scale3 //REAL
+Scale2: _Scale2, //IfcReal
+Scale3: _Scale3 //IfcReal
 });
                   }
       }
       exports.IFCCARTESIANTRANSFORMATIONOPERATOR3DNONUNIFORM = IFCCARTESIANTRANSFORMATIONOPERATOR3DNONUNIFORM;
+    
+       class IFCINTERSECTIONCURVE extends IFCSURFACECURVE {
+          constructor(_Curve3D, _AssociatedGeometry, _MasterRepresentation) {
+                  super(_Curve3D, _AssociatedGeometry, _MasterRepresentation);
+                  
+                  }
+      }
+      exports.IFCINTERSECTIONCURVE = IFCINTERSECTIONCURVE;
+    
+       class IFCSEAMCURVE extends IFCSURFACECURVE {
+          constructor(_Curve3D, _AssociatedGeometry, _MasterRepresentation) {
+                  super(_Curve3D, _AssociatedGeometry, _MasterRepresentation);
+                  
+                  }
+      }
+      exports.IFCSEAMCURVE = IFCSEAMCURVE;
     
        class IFCCOMPOSITECURVE extends IFCBOUNDEDCURVE {
           constructor(_Segments, _SelfIntersect) {
                   super();
                   this.add_attr({
 Segments: _Segments, //[object Object]
-SelfIntersect: _SelfIntersect //LOGICAL
+SelfIntersect: _SelfIntersect //IfcLogical
 });
                   }
       }
       exports.IFCCOMPOSITECURVE = IFCCOMPOSITECURVE;
+    
+       class IFCINDEXEDPOLYCURVE extends IFCBOUNDEDCURVE {
+          constructor(_Points, _Segments, _SelfIntersect) {
+                  super();
+                  this.add_attr({
+Points: _Points, //IfcCartesianPointList
+Segments: _Segments, //[object Object]
+SelfIntersect: _SelfIntersect //IfcBoolean
+});
+                  }
+      }
+      exports.IFCINDEXEDPOLYCURVE = IFCINDEXEDPOLYCURVE;
     
        class IFCPOLYLINE extends IFCBOUNDEDCURVE {
           constructor(_Points) {
@@ -4466,7 +4569,7 @@ Points: _Points //[object Object]
 BasisCurve: _BasisCurve, //IfcCurve
 Trim1: _Trim1, //[object Object]
 Trim2: _Trim2, //[object Object]
-SenseAgreement: _SenseAgreement, //BOOLEAN
+SenseAgreement: _SenseAgreement, //IfcBoolean
 MasterRepresentation: _MasterRepresentation //IfcTrimmingPreference
 });
                   }
@@ -4477,11 +4580,11 @@ MasterRepresentation: _MasterRepresentation //IfcTrimmingPreference
           constructor(_Degree, _ControlPointsList, _CurveForm, _ClosedCurve, _SelfIntersect) {
                   super();
                   this.add_attr({
-Degree: _Degree, //INTEGER
+Degree: _Degree, //IfcInteger
 ControlPointsList: _ControlPointsList, //[object Object]
 CurveForm: _CurveForm, //IfcBSplineCurveForm
-ClosedCurve: _ClosedCurve, //LOGICAL
-SelfIntersect: _SelfIntersect //LOGICAL
+ClosedCurve: _ClosedCurve, //IfcLogical
+SelfIntersect: _SelfIntersect //IfcLogical
 });
                   }
       }
@@ -4547,8 +4650,8 @@ WorkMethod: _WorkMethod //IfcLabel
                   this.add_attr({
 ConstructionType: _ConstructionType, //IfcWindowStyleConstructionEnum
 OperationType: _OperationType, //IfcWindowStyleOperationEnum
-ParameterTakesPrecedence: _ParameterTakesPrecedence, //BOOLEAN
-Sizeable: _Sizeable //BOOLEAN
+ParameterTakesPrecedence: _ParameterTakesPrecedence, //IfcBoolean
+Sizeable: _Sizeable //IfcBoolean
 });
                   }
       }
@@ -4560,8 +4663,8 @@ Sizeable: _Sizeable //BOOLEAN
                   this.add_attr({
 OperationType: _OperationType, //IfcDoorStyleOperationEnum
 ConstructionType: _ConstructionType, //IfcDoorStyleConstructionEnum
-ParameterTakesPrecedence: _ParameterTakesPrecedence, //BOOLEAN
-Sizeable: _Sizeable //BOOLEAN
+ParameterTakesPrecedence: _ParameterTakesPrecedence, //IfcBoolean
+Sizeable: _Sizeable //IfcBoolean
 });
                   }
       }
@@ -4604,8 +4707,8 @@ BaseQuantity: _BaseQuantity //IfcPhysicalQuantity
                   this.add_attr({
 Status: _Status, //IfcLabel
 WorkMethod: _WorkMethod, //IfcLabel
-IsMilestone: _IsMilestone, //BOOLEAN
-Priority: _Priority, //INTEGER
+IsMilestone: _IsMilestone, //IfcBoolean
+Priority: _Priority, //IfcInteger
 TaskTime: _TaskTime, //IfcTaskTime
 PredefinedType: _PredefinedType //IfcTaskTypeEnum
 });
@@ -4872,7 +4975,7 @@ Purpose: _Purpose //IfcLabel
                   this.add_attr({
 TheoryType: _TheoryType, //IfcAnalysisTheoryTypeEnum
 ResultForLoadGroup: _ResultForLoadGroup, //IfcStructuralLoadGroup
-IsLinear: _IsLinear //BOOLEAN
+IsLinear: _IsLinear //IfcBoolean
 });
                   }
       }
@@ -5377,7 +5480,7 @@ PredefinedType: _PredefinedType //IfcSpatialZoneTypeEnum
           constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _ObjectPlacement, _Representation, _AppliedLoad, _GlobalOrLocal, _DestabilizingLoad) {
                   super(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _ObjectPlacement, _Representation, _AppliedLoad, _GlobalOrLocal);
                   this.add_attr({
-DestabilizingLoad: _DestabilizingLoad //BOOLEAN
+DestabilizingLoad: _DestabilizingLoad //IfcBoolean
 });
                   }
       }
@@ -5601,10 +5704,11 @@ LongName: _LongName //IfcLabel
       exports.IFCZONE = IFCZONE;
     
        class IFCBUILDINGSYSTEM extends IFCSYSTEM {
-          constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _PredefinedType) {
+          constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _PredefinedType, _LongName) {
                   super(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType);
                   this.add_attr({
-PredefinedType: _PredefinedType //IfcBuildingSystemTypeEnum
+PredefinedType: _PredefinedType, //IfcBuildingSystemTypeEnum
+LongName: _LongName //IfcLabel
 });
                   }
       }
@@ -5740,7 +5844,7 @@ PredefinedType: _PredefinedType //IfcCurtainWallTypeEnum
                   this.add_attr({
 PredefinedType: _PredefinedType, //IfcDoorTypeEnum
 OperationType: _OperationType, //IfcDoorTypeOperationEnum
-ParameterTakesPrecedence: _ParameterTakesPrecedence, //BOOLEAN
+ParameterTakesPrecedence: _ParameterTakesPrecedence, //IfcBoolean
 UserDefinedOperationType: _UserDefinedOperationType //IfcLabel
 });
                   }
@@ -5883,7 +5987,7 @@ PredefinedType: _PredefinedType //IfcWallTypeEnum
                   this.add_attr({
 PredefinedType: _PredefinedType, //IfcWindowTypeEnum
 PartitioningType: _PartitioningType, //IfcWindowTypePartitioningEnum
-ParameterTakesPrecedence: _ParameterTakesPrecedence, //BOOLEAN
+ParameterTakesPrecedence: _ParameterTakesPrecedence, //IfcBoolean
 UserDefinedPartitioningType: _UserDefinedPartitioningType //IfcLabel
 });
                   }
@@ -6446,11 +6550,11 @@ PredefinedType: _PredefinedType //IfcStairTypeEnum
       exports.IFCSTAIR = IFCSTAIR;
     
        class IFCSTAIRFLIGHT extends IFCBUILDINGELEMENT {
-          constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _ObjectPlacement, _Representation, _Tag, _NumberOfRiser, _NumberOfTreads, _RiserHeight, _TreadLength, _PredefinedType) {
+          constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _ObjectPlacement, _Representation, _Tag, _NumberOfRisers, _NumberOfTreads, _RiserHeight, _TreadLength, _PredefinedType) {
                   super(_GlobalId, _OwnerHistory, _Name, _Description, _ObjectType, _ObjectPlacement, _Representation, _Tag);
                   this.add_attr({
-NumberOfRiser: _NumberOfRiser, //INTEGER
-NumberOfTreads: _NumberOfTreads, //INTEGER
+NumberOfRisers: _NumberOfRisers, //IfcInteger
+NumberOfTreads: _NumberOfTreads, //IfcInteger
 RiserHeight: _RiserHeight, //IfcPositiveLengthMeasure
 TreadLength: _TreadLength, //IfcPositiveLengthMeasure
 PredefinedType: _PredefinedType //IfcStairFlightTypeEnum
@@ -6700,13 +6804,13 @@ PredefinedType: _PredefinedType //IfcTendonAnchorTypeEnum
       exports.IFCTENDONANCHORTYPE = IFCTENDONANCHORTYPE;
     
        class IFCTENDONTYPE extends IFCREINFORCINGELEMENTTYPE {
-          constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ApplicableOccurrence, _HasPropertySets, _RepresentationMaps, _Tag, _ElementType, _PredefinedType, _NominalDiameter, _CrossSectionArea, _SheethDiameter) {
+          constructor(_GlobalId, _OwnerHistory, _Name, _Description, _ApplicableOccurrence, _HasPropertySets, _RepresentationMaps, _Tag, _ElementType, _PredefinedType, _NominalDiameter, _CrossSectionArea, _SheathDiameter) {
                   super(_GlobalId, _OwnerHistory, _Name, _Description, _ApplicableOccurrence, _HasPropertySets, _RepresentationMaps, _Tag, _ElementType);
                   this.add_attr({
 PredefinedType: _PredefinedType, //IfcTendonTypeEnum
 NominalDiameter: _NominalDiameter, //IfcPositiveLengthMeasure
 CrossSectionArea: _CrossSectionArea, //IfcAreaMeasure
-SheethDiameter: _SheethDiameter //IfcPositiveLengthMeasure
+SheathDiameter: _SheathDiameter //IfcPositiveLengthMeasure
 });
                   }
       }
