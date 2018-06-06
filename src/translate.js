@@ -8,11 +8,10 @@ var IfcFileItem = require("./models/IFCFile").IfcFileItem;
 let SpinalIfcSystem = function(model) {
   let d = q.defer();
 
-  let version = "IFC4";
 
-  var file_name = model.name
-    .get()
-    .replace(/ *\t*(%20)*\(([0-9]*)\)(%20)* *\t*/, "");
+
+  var file_name = model.name.get()
+  // .replace(/ *\t*(%20)*\(([0-9]*)\)(%20)* *\t*/, "");
 
   let cb = function() {
     // console.log(model);
@@ -25,7 +24,7 @@ let SpinalIfcSystem = function(model) {
       const ifcParser = require("./parsers/ifcParser");
       return ifcParser([file_name], extension).then(() => {
         const objectGenerator = require("./generators/objectGenerator");
-        objectGenerator(model, [file_name], version, extension);
+        objectGenerator(model, [file_name]);
         d.resolve();
         model.state.set("Translating completed");
         console.log("done");

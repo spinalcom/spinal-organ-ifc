@@ -73,12 +73,19 @@ function getById(_id, _objs) {
   return element;
 }
 
+function getVersion(headerArray) {
+  for (let index = 0; index < headerArray.length; index++) {
+    const element = headerArray[index];
+    let res = element.match(/FILE_SCHEMA[^'"]*['"]([\w]*)['"]/)
+    if (res != null) return res[1]
+  }
+}
+
 function createObject(_element, _array, _objs, _res, _params) {
   if (typeof _res[_element._id] === "undefined") {
-    const ENTITIES = require("../../ifc_models/" +
-      _params.version +
-      "_entities");
-    const TYPES = require("../../ifc_models/" + _params.version + "_types");
+    const ifc_models = path.resolve(__dirname + "/../../ifc_models");
+    const ENTITIES = require(ifc_models + "/" + _params.version + "_entities");
+    const TYPES = require(ifc_models + "/" + _params.version + "_types");
     ENTITIES;
     TYPES;
     let id = _element._id;
@@ -104,7 +111,8 @@ function createObject(_element, _array, _objs, _res, _params) {
     let addifcId = `_res[${id}].add_attr({ifcId: ${id}});`;
     try {
       _params.counter++;
-      _params.objectStreamer.write(s + "\n" + addifcId + "\n");
+      // + addifcId + "\n"
+      _params.objectStreamer.write(s + "\n");
       eval(s);
       _res[id].add_attr({
         ifcId: id
@@ -121,22 +129,27 @@ function createObject(_element, _array, _objs, _res, _params) {
   }
 }
 
-function createObjects(_jsonString, _version) {
+function createObjects(_jsonString, _file) {
+  let version = "IFC4";
   let obj = JSON.parse(_jsonString);
   let array = Object.values(obj.input._readableState.pipes.lines);
+  version = getVersion(Object.values(obj.input._readableState.pipes.header));
+  console.log("standard: " + version);
+
   let res = {};
+  const outputFile = path.resolve(__dirname + "/../../output/" + _file);
   var params = {
     counter: 0,
-    errorStreamer: fs.createWriteStream("errors.txt"),
+    errorStreamer: fs.createWriteStream(outputFile + "_errors.txt"),
     progressBar: new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic),
-    objectStreamer: fs.createWriteStream("objects.js"),
+    objectStreamer: fs.createWriteStream(outputFile + "_objects.js"),
     initialLength: array.length,
-    version: _version
+    version: version
   };
   params.progressBar.start(params.initialLength, 0);
   params.objectStreamer.write(
-    `const ENTITIES = require("../../ifc_models/${params.version}_entities");
-    const TYPES = require("../../ifc_models/+${params.version}_types");
+    `const ENTITIES = require("../ifc_models/${params.version}_entities");
+    const TYPES = require("../ifc_models/${params.version}_types");
     let _res = {};
     `
   );
@@ -152,7 +165,7 @@ function createObjects(_jsonString, _version) {
     createObject(element, array, objs, res, params);
   }
   params.progressBar.stop();
-  console.log(params.counter + "/" + params.initialLength);
+  console.log("number of objects: ", params.counter + "/" + params.initialLength);
   return res;
 }
 
@@ -361,19 +374,16 @@ function printProgress(progress) {
   process.stdout.write(progress);
 }
 
-let objectGenerator = function(_model, _inputFiles, _version) {
+let objectGenerator = function(_model, _inputFiles) {
   console.log("inputFiles:", _inputFiles.length);
 
   _inputFiles.forEach(file => {
-    const outputFile = path.resolve(
-      __dirname + "/../../output/" + file + "_objs.json"
-    );
     console.time("readAndPrepare");
     let json = readAndPrepare(file);
     console.timeEnd("readAndPrepare");
 
     console.time("createObjects");
-    let objects = createObjects(json, _version);
+    let objects = createObjects(json, file);
     console.timeEnd("createObjects");
 
     console.time("toLst");

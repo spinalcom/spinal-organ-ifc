@@ -29,7 +29,6 @@ var spawn = require("child_process").spawn;
 const fs = require("fs");
 
 if (!process.env.CLIENT_ID) {
-  console.log("default config");
   process.env.SPINAL_USER_ID = "168";
   process.env.SPINAL_PASSWORD = "JHGgcz45JKilmzknzelf65ddDadggftIO98P";
   process.env.SPINALHUB_IP = "localhost";
@@ -49,6 +48,8 @@ const connect_opt =
   "/";
 
 var conn = spinalCore.connect(connect_opt);
+console.log("Connected to the server");
+
 
 let speInputFolder = "ifc_specifications";
 let speArray = [];
@@ -58,6 +59,8 @@ fs.readdirSync(speInputFolder).forEach(file => {
 });
 const ifcSpecificationsParser = require("./src/parsers/ifcSpecificationsParser");
 ifcSpecificationsParser(speArray);
+console.log("Standards parsed and spinal models are ready");
+
 
 var err_connect = function(err) {
   if (!err) console.log("Error Connect.");
@@ -110,7 +113,7 @@ let callback_success = file => {
               // const pro = require("./pro");
               // pro(model._server_id);
 
-              let test = new run_cmd(
+              let otherProcess = new run_cmd(
                 script,
                 model,
                 (me, buffer) => {
@@ -118,7 +121,7 @@ let callback_success = file => {
                   me.stdout += buffer.toString();
                 },
                 () => {
-                  console.log(test.stdout);
+                  console.log(otherProcess.stdout);
                 }
               );
             };
@@ -132,6 +135,8 @@ let callback_success = file => {
     }
   });
 };
+console.log("Ready for tasks");
+
 spinalCore.load_type(conn, "File", callback_success, err_connect);
 
 let run_cmd = function(cmd, args, cb, end) {
@@ -152,11 +157,13 @@ let run_cmd = function(cmd, args, cb, end) {
 };
 
 let isReady = function(model, cb) {
+
   if (!model._server_id || global.FileSystem._tmp_objects[model._server_id])
     setTimeout(() => {
       isReady(model, cb);
     }, 1000);
   else {
+    console.log("Working on:" + model.name.get());
     cb();
   }
 };
