@@ -52,7 +52,6 @@ let isReady = function(model, cb) {
 
 let cb = function(_model) {
   _model.state.set("Export completed");
-  console.log("spawn exited");
   setTimeout(() => {
     process.exit(0);
   }, 1000);

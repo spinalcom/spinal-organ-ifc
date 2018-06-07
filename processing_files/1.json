@@ -1,5 +1,5 @@
 {
-  "filename": "/home/hossam/SpinalCom/spinal-organ-ifc/1.ifc",
+  "filename": "/home/hossam/SpinalCom/spinal-organ-ifc/ifc/1.ifc",
   "input": {
     "_readableState": {
       "objectMode": false,
@@ -8304,7 +8304,7 @@
     "readable": false,
     "_events": {},
     "_eventsCount": 2,
-    "path": "/home/hossam/SpinalCom/spinal-organ-ifc/1.ifc",
+    "path": "/home/hossam/SpinalCom/spinal-organ-ifc/ifc/1.ifc",
     "fd": null,
     "flags": "r",
     "mode": 438,

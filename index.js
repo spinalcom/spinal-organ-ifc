@@ -27,6 +27,10 @@ var Q = require("q");
 var IfcFileItem = require("./src/models/IFCFile").IfcFileItem;
 var spawn = require("child_process").spawn;
 const fs = require("fs");
+const EventEmitter = require('events');
+class MyEmitter extends EventEmitter {}
+const myEmitter = new MyEmitter();
+
 
 if (!process.env.CLIENT_ID) {
   process.env.SPINAL_USER_ID = "168";
@@ -83,6 +87,7 @@ let wait_for_endround = file => {
 };
 
 let callback_success = file => {
+
   wait_for_endround(file).then(() => {
     if (
       file &&
@@ -109,26 +114,9 @@ let callback_success = file => {
                 state: ifcFileItem.state
               });
             }, 1000);
-            let cb = function(script, model) {
-              // const pro = require("./pro");
-              // pro(model._server_id);
+            params.queue.push(ifcFileItem);
 
-              let otherProcess = new run_cmd(
-                script,
-                model,
-                (me, buffer) => {
-                  // console.log(buffer.toString());
-                  me.stdout += buffer.toString();
-                },
-                () => {
-                  console.log(otherProcess.stdout);
-                }
-              );
-            };
-            isReady(
-              ifcFileItem,
-              cb.bind(null, "./src/translate.js", ifcFileItem)
-            );
+            myEmitter.emit('doNext');
           });
         }
       }
@@ -136,10 +124,13 @@ let callback_success = file => {
   });
 };
 console.log("Ready for tasks");
-
+var params = {};
+params.counter = 1;
+params.queue = [];
+params.capacity = 3;
 spinalCore.load_type(conn, "File", callback_success, err_connect);
 
-let run_cmd = function(cmd, args, cb, end) {
+let run_cmd = function(cmd, args, cb, end, close) {
   var spawn = require("child_process").spawn,
     child = spawn("./" + cmd, [
       "--max-old-space-size=8192",
@@ -154,10 +145,11 @@ let run_cmd = function(cmd, args, cb, end) {
     cb(me, buffer);
   });
   child.stdout.on("end", end);
+  child.on('close', close);
 };
 
 let isReady = function(model, cb) {
-
+  // console.log("test");
   if (!model._server_id || global.FileSystem._tmp_objects[model._server_id])
     setTimeout(() => {
       isReady(model, cb);
@@ -165,5 +157,51 @@ let isReady = function(model, cb) {
   else {
     console.log("Working on:" + model.name.get());
     cb();
+    // console.log(params.queue.length +
+    //   " element(s) in the waiting queue");
+    // params.queue.forEach(element => {
+    //   console.log("-> " + element.name);
+    // });
   }
 };
+
+
+let cb = function(script, model) {
+  let test = new run_cmd(
+    script,
+    model,
+    (me, buffer) => {
+      // console.log(buffer.toString());
+      me.stdout += buffer.toString();
+    },
+    () => {
+      console.log(test.stdout);
+    },
+    () => {
+      params.counter--;
+      myEmitter.emit('doNext');
+    }
+  );
+};
+
+
+
+myEmitter.on('doNext', () => {
+  if (params.counter <= params.capacity) {
+    if (params.queue.length > 0) {
+      let ifcFileItem = params.queue.shift();
+      // console.log(ifcFileItem);
+      params.counter++;
+      isReady(
+        ifcFileItem,
+        cb.bind(null, "./src/translate.js", ifcFileItem)
+      );
+    }
+  } else {
+    console.log("\n" + params.queue.length +
+      " element(s) in the waiting queue");
+    params.queue.forEach(element => {
+      console.log("-> " + element.name);
+    });
+  }
+});
