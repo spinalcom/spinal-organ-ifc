@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "mkdir -p ifc/ && mkdir -p output/ && mkdir -p processing_files/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

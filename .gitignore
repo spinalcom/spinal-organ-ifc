@@ -1,8 +1,6 @@
 node_modules
-processing_files/*.json
-ifc/*.ifc
-ifc/*.stp
-output/*.txt
-output/*.js
+processing_files/*
+ifc/*
+output/*
 
 
