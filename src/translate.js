@@ -58,8 +58,10 @@ let cb = function(_model) {
 };
 
 var loadWithServerId = function(_serverId) {
-  process.env.SPINALHUB_IP = "localhost";
-  process.env.SPINALHUB_PORT = 7777;
+  if (!process.env.CLIENT_ID) {
+    process.env.SPINALHUB_IP = "localhost";
+    process.env.SPINALHUB_PORT = 7777;
+  }
 
   let connection = spinalCore.connect(
     "http://168:JHGgcz45JKilmzknzelf65ddDadggftIO98P@" +
