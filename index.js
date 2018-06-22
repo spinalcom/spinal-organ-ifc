@@ -32,7 +32,7 @@ class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
 
-if (!process.env.CLIENT_ID) {
+if (typeof process.env.CLIENT_ID === "undefined") {
   process.env.SPINAL_USER_ID = "168";
   process.env.SPINAL_PASSWORD = "JHGgcz45JKilmzknzelf65ddDadggftIO98P";
   process.env.SPINALHUB_IP = "localhost";

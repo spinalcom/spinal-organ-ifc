@@ -58,7 +58,7 @@ let cb = function(_model) {
 };
 
 var loadWithServerId = function(_serverId) {
-  if (!process.env.CLIENT_ID) {
+  if (typeof process.env.CLIENT_ID === "undefined") {
     process.env.SPINALHUB_IP = "localhost";
     process.env.SPINALHUB_PORT = 7777;
   }
