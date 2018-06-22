@@ -2,3 +2,7 @@ node_modules
 processing_files/*
 ifc/*
 output/*
+
+!processing_files/.gitkeep 
+!ifc/.gitkeep 
+!output/.gitkeep 
