@@ -175,7 +175,10 @@ exports.generateTypes = function(res, _file) {
 
   let typesTable = [];
 
-  let types = Object.values(res._types);
+  // let types = Object.values(res._types);
+  // let objKeysMap = Object.keys(res._types).map((k) => obj[k]);
+
+  let types = Object.keys(res._types).map((k) => res._types[k]);
 
   for (let i = 0; i < types.length; i++) {
     const element = types[i];
@@ -197,7 +200,12 @@ exports.generateEntities = function(res, _file) {
   var exports = (module.exports = {});
   `;
 
-  let entities = Object.values(res._entities);
+  // let entities = Object.values(res._entities);
+  let entities = Object.keys(res._entities).map((k) =>
+    res._entities[k]);
+
+
+
   //attention entities is a stack, can get poped
   let tree = new IFCTree(entities);
   let NamesTree = tree.getEntitiesNamesByOrder();

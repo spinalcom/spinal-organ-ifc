@@ -132,8 +132,13 @@ function createObject(_element, _array, _objs, _res, _params) {
 function createObjects(_jsonString, _file) {
   let version = "IFC4";
   let obj = JSON.parse(_jsonString);
-  let array = Object.values(obj.input._readableState.pipes.lines);
-  version = getVersion(Object.values(obj.input._readableState.pipes.header));
+  // let array = Object.values(obj.input._readableState.pipes.lines);
+  let array = Object.keys(obj.input._readableState.pipes.lines).map((k) => obj.input
+    ._readableState.pipes.lines[k]);
+
+  // version = getVersion(Object.values(obj.input._readableState.pipes.header));
+  version = getVersion(Object.keys(obj.input._readableState.pipes.header).map((
+    k) => obj.input._readableState.pipes.header[k]));
   console.log("standard: " + version);
 
   let res = {};

@@ -1,11 +1,4 @@
 node_modules
-processing_files
-ifc
-output
-ifc/t2-bal-ex-modele-b.ifc
-processing_files/201608-sccp-arc-t1-bata-maq-test.json
-processing_files/201608-sccp-arc-t1-bata-maq-test_after_regex.json
-processing_files/svaleveien 8_hus.json
-processing_files/svaleveien 8_hus_after_regex.json
-processing_files/t2-bal-ex-modele-b.json
-processing_files/t2-bal-ex-modele-b_after_regex.json
+processing_files/*
+ifc/*
+output/*
